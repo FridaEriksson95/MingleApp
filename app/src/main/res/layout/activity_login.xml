@@ -38,7 +38,7 @@
                 android:drawablePadding="20dp"
                 android:fontFamily="@font/acme"
                 android:textSize="24sp"
-                android:hint="Email"
+                android:hint="@string/email"
                 android:padding="8dp"/>
 
             <EditText
@@ -51,7 +51,7 @@
                android:layout_marginTop="20dp"
                 android:fontFamily="@font/acme"
                 android:textSize="24sp"
-                android:hint="Password"
+                android:hint="@string/password"
                 android:inputType="textPassword"
                 android:padding="8dp"/>
 
@@ -61,7 +61,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp"
-                android:text="LOGIN"
+                android:text="@string/login"
                 android:fontFamily="@font/acme"
                 android:textStyle="bold"
                 android:textSize="18sp"
@@ -72,7 +72,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="Forgot Password?"
+                android:text="@string/forgot_password"
                 android:layout_marginTop="10dp"
                 android:padding="8dp"
                 android:textSize="20sp"
@@ -83,7 +83,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="Sign Up Here!"
+                android:text="@string/sign_up_here"
                 android:layout_marginTop="10dp"
                 android:padding="8dp"
                 android:textSize="20sp"
