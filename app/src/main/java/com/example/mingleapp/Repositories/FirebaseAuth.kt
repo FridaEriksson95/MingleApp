@@ -20,14 +20,10 @@ class FirebaseAuth {
 
                 val currentUser = auth.currentUser
                 val uid = currentUser?.uid ?: ""
-
-//                Add firebase cloud user, make method in FirebaseDatabase, put it here
                 db.addUser(name, email, uid)
-
-//                Log.d("!!!", "User created successfully")
                 onSuccess()
+
             } else {
-//                Log.d("!!!", "User creation failed ${isCreated.exception?.message}")
 
                 val errorMessage = when (val error = isCreated.exception) {
                     is FirebaseAuthWeakPasswordException -> "Password should be at least 6 characters."
@@ -44,7 +40,7 @@ class FirebaseAuth {
 
 
 
-//Sign in
+
     fun signIn(email: String, password: String, onSuccess: () -> Unit, onFailure: (Exception) -> Unit) {
 
         auth.signInWithEmailAndPassword(email, password).addOnCompleteListener { task ->
@@ -52,15 +48,11 @@ class FirebaseAuth {
                 val user = auth.currentUser
                 if (user != null) {
 
-//                    Make Toast, Intent, Callbacks(?)
-                    Log.d("!!!", "User ${auth.currentUser?.email} signed in successfully")
+
+                    Log.d("FireBaseAuth", "User ${auth.currentUser?.email} signed in successfully")
                     onSuccess()
 
-                } else {
-                    auth.signOut() // Sign out if email is not verified, prevent user from logging in, Firebase allows logins without verification, must have this code, its an extra precaution control
-                    onFailure(Exception("Email is not verified, please verify your email"))
                 }
-
             } else {
 
                 val errorMessage = when (val error = task.exception) {
@@ -69,7 +61,7 @@ class FirebaseAuth {
                     else -> error?.localizedMessage ?: "Sign in failed. Please try again"
                 }
 
-                Log.d("!!!", "User sign in failed ${task.exception?.message}")
+                Log.d("FireBaseAuth", "User sign in failed ${task.exception?.message}")
                 onFailure(Exception(errorMessage))
             }
 
