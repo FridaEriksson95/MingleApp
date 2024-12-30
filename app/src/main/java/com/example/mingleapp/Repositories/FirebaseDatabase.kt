@@ -24,26 +24,18 @@ class FirebaseDatabase {
 
         db.collection("users").addSnapshotListener { snapshot, error ->
 
-//            Check if snapshot is not null, check if data has been retried from the database correctly
             if (snapshot != null) {
-
-//                Creates an empty list where we are going to store the users
                 val userList = mutableListOf<Users>()
 
-//                Loop through the documents in the snapshot
+
                 for (document in snapshot.documents) {
-
-//                    Try to convert the document to actual User objects
                     val user = document.toObject(Users::class.java)
-
-//                    if convert is successful, add the user to the list
                     if( user != null) {
-                        user.uid = document.id // Put the document ID in the user object
-                        userList.add(user) // Add the user to the list
+                        user.uid = document.id
+                        userList.add(user)
                     }
 
                 }
-
                 _users.value = userList
             } else { "A error: ${error?.message} has occurred"}
 
@@ -56,11 +48,11 @@ class FirebaseDatabase {
         val user = Users(name, email)
         db.collection("users").document(uid).set(user).addOnSuccessListener {
 
-            Log.d("!!!", "User added successfully")
+            Log.d("FireBaseDatabase", "User added successfully")
 
         }.addOnFailureListener {
 
-            Log.d("!!!", "User add failed")
+            Log.d("FireBaseDatabase", "User add failed")
         }
 
 
