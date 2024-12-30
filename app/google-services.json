@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "201799593921",
+    "project_id": "mingleapp-6650c",
+    "storage_bucket": "mingleapp-6650c.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:201799593921:android:a2d7a77df26b775a1d0940",
+        "android_client_info": {
+          "package_name": "com.example.mingleapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDbZDfyreUMnDto7Tx7nBa9aR6751zD2yA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
