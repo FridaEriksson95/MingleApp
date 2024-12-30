@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
@@ -7,4 +7,114 @@
     android:layout_height="match_parent"
     tools:context=".View.SignUpActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="200dp"
+            android:layout_height="130dp"
+            android:layout_gravity="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.4"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/logo"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="2dp">
+
+        <EditText
+            android:id="@+id/signup_email"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:background="@drawable/border"
+            android:drawableLeft="@drawable/baseline_email_24"
+            android:drawablePadding="20dp"
+            android:fontFamily="@font/acme"
+            android:textSize="24sp"
+            android:hint="Email"
+            android:padding="8dp"/>
+
+        <EditText
+            android:id="@+id/signup_username"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:background="@drawable/border"
+            android:drawableLeft="@drawable/baseline_person_24"
+            android:drawablePadding="20dp"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/acme"
+            android:textSize="24sp"
+            android:hint="Username"
+            android:padding="8dp"/>
+
+        <EditText
+            android:id="@+id/signup_birthdate"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:background="@drawable/border"
+            android:drawableLeft="@drawable/baseline_date_range_24"
+            android:drawablePadding="20dp"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/acme"
+            android:textSize="24sp"
+            android:hint="Date of Birth"
+            android:padding="8dp"/>
+
+        <EditText
+            android:id="@+id/signup_pw"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:background="@drawable/border"
+            android:drawableLeft="@drawable/baseline_lock_24"
+            android:drawablePadding="20dp"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/acme"
+            android:textSize="24sp"
+            android:hint="Password"
+            android:inputType="textPassword"
+            android:padding="8dp"/>
+
+        <EditText
+            android:id="@+id/signup_confirm"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:background="@drawable/border"
+            android:drawableLeft="@drawable/baseline_password_24"
+            android:drawablePadding="20dp"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/acme"
+            android:textSize="24sp"
+            android:hint="Confirm Password"
+            android:inputType="textPassword"
+            android:padding="8dp"/>
+
+        <ImageView
+            android:id="@+id/profile_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/baseline_person_24"
+            android:background="@drawable/border"
+            android:padding="20dp"/>
+
+        <Button
+            android:id="@+id/login_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:text="@string/register"
+            android:fontFamily="@font/acme"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:paddingHorizontal="50dp"/>
+
+</LinearLayout>
