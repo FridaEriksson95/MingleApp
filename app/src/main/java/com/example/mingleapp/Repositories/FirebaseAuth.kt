@@ -20,7 +20,7 @@ class FirebaseAuth {
 
                 val currentUser = auth.currentUser
                 val uid = currentUser?.uid ?: ""
-                db.addUser(email, uid, userName, birth)
+                db.addUser(userName, email, uid, birth)
                 onSuccess()
 
             } else {

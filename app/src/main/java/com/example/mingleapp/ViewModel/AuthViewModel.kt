@@ -1,8 +1,9 @@
 package com.example.mingleapp.ViewModel
 
+import androidx.lifecycle.ViewModel
 import com.example.mingleapp.Repositories.FirebaseAuth
 
-class AuthViewModel {
+class AuthViewModel: ViewModel() {
 
     private val authRepository = FirebaseAuth()
 
