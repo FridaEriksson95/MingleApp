@@ -12,7 +12,7 @@
         android:layout_height="match_parent"
         android:orientation="horizontal">
 
-        <ImageButton
+        <ImageView
             android:id="@+id/recyclerIv"
             android:layout_width="50dp"
             android:layout_height="50dp"
