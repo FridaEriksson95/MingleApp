@@ -13,14 +13,15 @@ class FirebaseAuth {
     private val db = FirebaseDatabase()
 
 
-    fun createAccount(birth: String, userName: String, email: String, password: String, onSuccess: () -> Unit, onFailure: (Exception) -> Unit) {
+    fun createAccount(birth: String, userName: String, email: String, password: String,imageResourceID: Int, onSuccess: () -> Unit, onFailure: (Exception) -> Unit) {
 
         auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener { isCreated ->
             if (isCreated.isSuccessful) {
 
                 val currentUser = auth.currentUser
                 val uid = currentUser?.uid ?: ""
-                db.addUser(email, uid, userName, birth)
+                db.addUser(email, uid, userName, birth,imageResourceID)
+
                 onSuccess()
 
             } else {
