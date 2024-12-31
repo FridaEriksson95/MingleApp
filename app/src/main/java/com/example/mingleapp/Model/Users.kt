@@ -1,7 +1,7 @@
 package com.example.mingleapp.Model
 
-data class Users(var name: String? = null, var email: String? = null, var uid: String? = null) {
+data class Users(var userName: String? = null, var email: String? = null, var uid: String? = null, var dateOfBirth: String? = null) {
 
-    constructor() : this("", "", "")
+    constructor() : this("", "", "", "")
 
 }
