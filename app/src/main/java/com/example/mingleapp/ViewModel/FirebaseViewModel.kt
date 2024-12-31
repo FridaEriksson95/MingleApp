@@ -3,10 +3,10 @@ package com.example.mingleapp.ViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.example.mingleapp.Model.Users
-import com.example.mingleapp.Repositories.FirebaseDatabase
+import com.example.mingleapp.Repositories.DatabaseRepository
 
 class FirebaseViewModel : ViewModel() {
-    val db = FirebaseDatabase()
+    val db = DatabaseRepository()
 
     val users : LiveData<MutableList<Users>> get() = db.users
 

@@ -7,7 +7,7 @@ import com.example.mingleapp.Model.Users
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
 
-class FirebaseDatabase {
+class DatabaseRepository {
 
     private val db = Firebase.firestore
 

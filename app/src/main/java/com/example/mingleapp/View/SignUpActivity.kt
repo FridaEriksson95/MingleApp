@@ -1,9 +1,12 @@
 package com.example.mingleapp.View
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -16,6 +19,7 @@ class SignUpActivity : AppCompatActivity() {
 
     lateinit var binding: ActivitySignUpBinding
     lateinit var authVm: AuthViewModel
+    lateinit var profileImagePicker : ActivityResultLauncher<Intent>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,17 +33,22 @@ class SignUpActivity : AppCompatActivity() {
             insets
         }
 
-//        binding.profileImage.setOnClickListener {
-//            val profilePick = Intent(Intent.ACTION_PICK)
-//            profilePick.type = "image/*"
-//            activityResultLauncher
-//        }
+        profileImagePicker =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+                if (result.resultCode == Activity.RESULT_OK && result.data != null) {
+                    val selectedImage = result.data?.data
+                    binding.profileImage.setImageURI(selectedImage)
+                }
+            }
+        binding.profileImage.setOnClickListener {
+            val profilePickIntent = Intent(Intent.ACTION_PICK)
+            profilePickIntent.type = "image/*"
+            profileImagePicker.launch(profilePickIntent)
+        }
 
         binding.loginBtn.setOnClickListener {
             createAccount()
         }
-
-
     }
 
     private fun createAccount() {
