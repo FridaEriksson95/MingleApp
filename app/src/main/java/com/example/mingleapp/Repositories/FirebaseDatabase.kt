@@ -43,9 +43,9 @@ class FirebaseDatabase {
 
     }
 
-    fun addUser(userName: String, email: String, uid: String, birth: String) {
+    fun addUser(userName: String, email: String, uid: String, birth: String,imageResoruceid: Int) {
 
-        val user = Users(userName, email, uid, birth)
+        val user = Users(userName, email, uid, birth,imageResoruceid)
         db.collection("users").document(uid).set(user).addOnSuccessListener {
 
             Log.d("FireBaseDatabase", "User added successfully")
