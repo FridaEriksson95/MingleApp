@@ -29,6 +29,12 @@ class SignUpActivity : AppCompatActivity() {
             insets
         }
 
+//        binding.profileImage.setOnClickListener {
+//            val profilePick = Intent(Intent.ACTION_PICK)
+//            profilePick.type = "image/*"
+//            activityResultLauncher
+//        }
+
         binding.loginBtn.setOnClickListener {
             createAccount()
         }
