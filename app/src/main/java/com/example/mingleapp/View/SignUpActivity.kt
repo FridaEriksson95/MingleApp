@@ -44,6 +44,7 @@ class SignUpActivity : AppCompatActivity() {
         val birth = binding.signupBirthdate.text.toString()
 
 
+
         if (email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty() || username.isEmpty() || birth.isEmpty()) {
             Toast.makeText(this, "Please fill all fields", Toast.LENGTH_SHORT).show()
             return
@@ -59,12 +60,13 @@ class SignUpActivity : AppCompatActivity() {
             return
         }
 
-        authVm.createAccount(birth, username, email, password, onSuccess = {
+        authVm.createAccount(birth, username, email, password, imageResourceID = 0, onSuccess = {
             Toast.makeText(this, "Account created", Toast.LENGTH_LONG).show()
             navigateToLogin()
         }, onFailure = {
             Toast.makeText(this, "Account creation failed", Toast.LENGTH_SHORT).show()
-        })
+        },
+        )
     }
     private fun navigateToLogin() {
         val intent = Intent(this, LoginActivity::class.java)
