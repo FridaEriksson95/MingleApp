@@ -11,4 +11,9 @@
     <string name="login">LOGIN</string>
     <string name="forgot_password">Forgot Password?</string>
     <string name="sign_up_here">Sign Up Here!</string>
+    <string name="forgot_password_dialog">Forgot Password</string>
+    <string name="enter_your_email_adress">Enter your email adress</string>
+    <string name="cancel">CANCEL</string>
+    <string name="reset">RESET</string>
+    <string name="type_message">Type Message</string>
 </resources>

@@ -115,7 +115,8 @@
             android:fontFamily="@font/acme"
             android:textStyle="bold"
             android:textSize="18sp"
-            android:paddingHorizontal="50dp"/>
+            android:paddingHorizontal="50dp"
+            android:backgroundTint="@color/green"/>
 
 </LinearLayout>
     </LinearLayout>
