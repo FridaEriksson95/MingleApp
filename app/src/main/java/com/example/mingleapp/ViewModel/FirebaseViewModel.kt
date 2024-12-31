@@ -14,4 +14,8 @@ class FirebaseViewModel : ViewModel() {
         db.addUser(userName,email,uid,birth,imageResourceId)
     }
 
+    fun onQueryTextChange(query : String) {
+        db.onQueryTextChange(query)
+    }
+
 }

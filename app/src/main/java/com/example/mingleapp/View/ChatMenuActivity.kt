@@ -1,8 +1,10 @@
 package com.example.mingleapp.View
 
 import android.os.Bundle
+import android.widget.SearchView.OnQueryTextListener
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
@@ -35,6 +37,21 @@ class ChatMenuActivity : AppCompatActivity() {
         firebaseViewModel.users.observe(this) {usersList ->
             adapter.updateData(usersList)
         }
+
+        binding.searchView.setOnQueryTextListener(object : OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                if (newText != null) {
+                    firebaseViewModel.onQueryTextChange(newText)
+                }
+                return true
+            }
+
+        })
+
     }
 
 }

@@ -14,6 +14,7 @@ class DatabaseRepository {
     private val _users = MutableLiveData(mutableListOf<Users>())
     val users: LiveData<MutableList<Users>> get() = _users
 
+
     init {
 
         addSnapShotListener()
@@ -55,6 +56,28 @@ class DatabaseRepository {
             Log.d("FireBaseDatabase", "User add failed")
         }
 
+
+    }
+
+    fun onQueryTextChange(query : String) {
+        db.collection("users")
+            .whereGreaterThanOrEqualTo("userName",query)
+            .whereLessThanOrEqualTo("userName", query + '\uf8ff')
+            .addSnapshotListener {snapshot, error ->
+                if (snapshot != null) {
+                    val userList = mutableListOf<Users>()
+                    for (doc in snapshot.documents) {
+                        val user = doc.toObject(Users::class.java)
+                        if (user != null) {
+                            user.uid = doc.id
+                            userList.add(user)
+                        }
+                    }
+                    _users.value = userList
+                }else {
+                    Log.d("DatabaseRepo","Error")
+                }
+            }
 
     }
 }
