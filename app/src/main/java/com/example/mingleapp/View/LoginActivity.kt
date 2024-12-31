@@ -14,12 +14,14 @@ import com.example.mingleapp.databinding.ActivityLoginBinding
 
 class LoginActivity : AppCompatActivity() {
 
-    lateinit var binding: ActivityLoginBinding
+    private lateinit var binding : ActivityLoginBinding
     lateinit var authVm: AuthViewModel
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
         authVm = ViewModelProvider(this).get(AuthViewModel::class.java)

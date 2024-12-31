@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:padding="8dp"
+        android:gravity="start"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/show_message_left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:padding="10dp"
+            android:fontFamily="@font/acme"
+            android:text="Hello"
+            android:visibility="visible"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp"
+            android:background="@drawable/green_fill"/>
+        <TextView
+            android:id="@+id/name_tv_left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Robin"
+            android:layout_weight="1"
+            android:fontFamily="@font/acme"
+            android:textStyle="italic"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="10dp"/>
+    </LinearLayout>
+</layout>
