@@ -1,11 +1,9 @@
 package com.example.mingleapp.Adapters
 
 import android.content.Context
-import android.text.Layout
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -40,21 +38,21 @@ class UserAdapter(
 
         holder.itemView.setOnClickListener {
 
-            val fragment = ChatFragment()
+            val chatFragment = ChatFragment()
 
             val activity = context as AppCompatActivity
 
             activity.supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, fragment)
+                .replace(R.id.fragment_container, chatFragment)
                 .addToBackStack(null)
                 .commit()
 
             activity.findViewById<View>(R.id.chat_menu_layout).visibility = View.GONE
             activity.findViewById<View>(R.id.fragment_container).visibility = View.VISIBLE
 
-            }
-
         }
+
+    }
 
     fun updateData (newUsers : MutableList<Users>) {
         users.clear()

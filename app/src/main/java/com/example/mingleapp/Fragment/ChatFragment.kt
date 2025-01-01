@@ -37,12 +37,3 @@ class ChatFragment : Fragment() {
 
     }
 }
-
-
-/*
-
-inflate this layout and test if the fragment works now with the emulator
-create a seperate xml file for container?
-
-
- */
