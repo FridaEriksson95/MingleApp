@@ -42,8 +42,7 @@ class LoginActivity : AppCompatActivity() {
         }
 
         binding.loginBtn.setOnClickListener {
-//            login()
-            navigateToChatMenu()
+            login()
         }
 
         binding.forgotPw.setOnClickListener{
