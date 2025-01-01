@@ -20,14 +20,14 @@ class ChatMenuActivity : AppCompatActivity() {
         enableEdgeToEdge()
         binding = ActivityChatMenuBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.chat_menu_layout)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
         val firebaseViewModel = ViewModelProvider(this)[FirebaseViewModel::class.java]
 
-        adapter = UserAdapter(mutableListOf())
+        adapter = UserAdapter(mutableListOf(), this)
 
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
