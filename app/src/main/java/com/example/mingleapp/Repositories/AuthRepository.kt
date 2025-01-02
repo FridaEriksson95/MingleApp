@@ -41,9 +41,6 @@ class AuthRepository {
 
     }
 
-
-
-
     fun signIn(email: String, password: String, onSuccess: () -> Unit, onFailure: (Exception) -> Unit) {
 
         auth.signInWithEmailAndPassword(email, password).addOnCompleteListener { task ->
@@ -78,6 +75,9 @@ class AuthRepository {
         auth.signOut()
         logOut.postValue(true)
         return logOut
-
+    }
+    
+    fun getCurrentUserId() : String {
+        return auth.currentUser?.uid ?: ""
     }
 }
