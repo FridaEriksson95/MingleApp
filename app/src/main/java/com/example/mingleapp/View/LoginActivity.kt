@@ -23,7 +23,6 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var binding : ActivityLoginBinding
     lateinit var authVm: AuthViewModel
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -111,5 +110,4 @@ class LoginActivity : AppCompatActivity() {
             }
         }
     }
-
 }

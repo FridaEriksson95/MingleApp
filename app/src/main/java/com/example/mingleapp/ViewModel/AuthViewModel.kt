@@ -26,13 +26,11 @@ class AuthViewModel: ViewModel() {
         return firebaseAuth.sendPasswordResetEmail(email)
     }
 
-
     fun logOut () : LiveData<Boolean> {
        return authRepository.logOut()
     }
     
     fun getCurrentUserId() : String {
         return authRepository.getCurrentUserId()
-
     }
 }
