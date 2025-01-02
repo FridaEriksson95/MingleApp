@@ -15,6 +15,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mingleapp.Adapters.UserAdapter
 import com.example.mingleapp.R
+import com.example.mingleapp.ViewModel.AuthViewModel
 import com.example.mingleapp.ViewModel.FirebaseViewModel
 import com.example.mingleapp.databinding.ActivityChatMenuBinding
 import com.google.firebase.auth.FirebaseAuth
@@ -22,7 +23,7 @@ import com.google.firebase.auth.FirebaseAuth
 class ChatMenuActivity : AppCompatActivity() {
     private lateinit var binding : ActivityChatMenuBinding
     private lateinit var adapter : UserAdapter
-    private lateinit var firebaseViewModel: FirebaseViewModel
+    private lateinit var authVm : AuthViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,7 +35,8 @@ class ChatMenuActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-//
+         authVm = ViewModelProvider(this)[AuthViewModel::class.java]
+
 
         adapter = UserAdapter(mutableListOf(), this)
         setSupportActionBar(binding.toolbar)
@@ -70,7 +72,7 @@ class ChatMenuActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
             return when (item.itemId) {
                 R.id.sign_out -> {
-                    firebaseViewModel.logOutUser().observe(this) { isLoggedOut ->
+                    authVm.logOut().observe(this) { isLoggedOut ->
                         if (isLoggedOut) {
                             Toast.makeText(this, "Sign out successful..", Toast.LENGTH_SHORT).show()
                             navigateToLogin()

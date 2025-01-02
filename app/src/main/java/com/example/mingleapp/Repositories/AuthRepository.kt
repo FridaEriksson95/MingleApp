@@ -1,6 +1,8 @@
 package com.example.mingleapp.Repositories
 
 import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
@@ -67,6 +69,14 @@ class AuthRepository {
 
     }
 
+    fun logOut() : LiveData<Boolean>{
+        val logOut = MutableLiveData<Boolean>()
+
+        auth.signOut()
+        logOut.postValue(true)
+        return logOut
+    }
+    
     fun getCurrentUserId() : String {
         return auth.currentUser?.uid ?: ""
     }

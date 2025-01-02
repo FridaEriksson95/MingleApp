@@ -1,5 +1,6 @@
 package com.example.mingleapp.ViewModel
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.example.mingleapp.Repositories.AuthRepository
 import com.google.android.gms.tasks.Task
@@ -25,9 +26,13 @@ class AuthViewModel: ViewModel() {
         return firebaseAuth.sendPasswordResetEmail(email)
     }
 
+
+    fun logOut () : LiveData<Boolean> {
+       return authRepository.logOut()
+    }
+    
     fun getCurrentUserId() : String {
         return authRepository.getCurrentUserId()
 
     }
-
 }
