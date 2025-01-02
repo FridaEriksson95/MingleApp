@@ -1,11 +1,13 @@
 package com.example.mingleapp.Adapters
 
 import android.content.Context
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mingleapp.Model.Messages
+import com.example.mingleapp.Model.Users
 import com.example.mingleapp.R
 
 const val MESSAGE_RECEIVED = 1
@@ -13,22 +15,22 @@ const val MESSAGE_SENT = 2
 
 class MessageAdapter(val context: Context,
                      val messagesList:MutableList<Messages>,
+                     val currentUser: MutableList<Users>,
                      val currentUserId: String)
     : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     inner class SentViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-//        Chat right -> sends message
-        val tvMessage = itemView.findViewById<TextView>(R.id.show_message_right)
-        val tvName = itemView.findViewById<TextView>(R.id.name_tv_right)
+
+        val tvSentMessage = itemView.findViewById<TextView>(R.id.show_message_right)
+        val tvSentName = itemView.findViewById<TextView>(R.id.name_tv_right)
 
     }
 
     inner class ReceivedViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        //        Chat left -> receives message
-        val tvMessage = itemView.findViewById<TextView>(R.id.show_message_left)
-        val tvName = itemView.findViewById<TextView>(R.id.name_tv_left)
+        val tvReceviedMessage = itemView.findViewById<TextView>(R.id.show_message_left)
+        val tvReceivedName = itemView.findViewById<TextView>(R.id.name_tv_left)
 
     }
 
@@ -45,7 +47,13 @@ class MessageAdapter(val context: Context,
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        TODO("Not yet implemented")
+        if (viewType == MESSAGE_SENT) {
+            val view = LayoutInflater.from(context).inflate(R.layout.chat_right, parent, false)
+            return SentViewHolder(view)
+        } else {
+            val view = LayoutInflater.from(context).inflate(R.layout.chat_left, parent, false)
+            return ReceivedViewHolder(view)
+        }
     }
 
     override fun getItemCount(): Int {
@@ -53,7 +61,24 @@ class MessageAdapter(val context: Context,
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        TODO("Not yet implemented")
+
+        val message = messagesList[position]
+        val selectedUser = currentUser[position]
+
+        if (holder is SentViewHolder) {
+            holder.tvSentMessage.text = message.text
+            holder.tvSentName.text = selectedUser.userName
+        } else if (holder is ReceivedViewHolder) {
+            holder.tvReceviedMessage.text = message.text
+            holder.tvReceivedName.text = message.senderId
+        }
+
+    }
+
+    fun updateData(newMessages: MutableList<Messages>) {
+        messagesList.clear()
+        messagesList.addAll(newMessages)
+        notifyDataSetChanged()
     }
 
 }
