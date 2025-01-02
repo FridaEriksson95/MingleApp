@@ -1,18 +1,20 @@
 package com.example.mingleapp.Adapters
 
-import android.text.Layout
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
+import com.example.mingleapp.Fragment.ChatFragment
 import com.example.mingleapp.Model.Users
 import com.example.mingleapp.R
 
 class UserAdapter(
-    private val users: MutableList<Users>
+    private val users: MutableList<Users>,
+    private val context: Context
 ) : RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
 
     inner class UserViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -33,7 +35,25 @@ class UserAdapter(
         val user = users[position]
         holder.nameTextView.text = users[position].userName
         holder.profilePic.setImageResource(users[position].imageResourceID)
+
+        holder.itemView.setOnClickListener {
+
+            val chatFragment = ChatFragment()
+
+            val activity = context as AppCompatActivity
+
+            activity.supportFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, chatFragment)
+                .addToBackStack(null)
+                .commit()
+
+            activity.findViewById<View>(R.id.chat_menu_layout).visibility = View.GONE
+            activity.findViewById<View>(R.id.fragment_container).visibility = View.VISIBLE
+
+        }
+
     }
+
     fun updateData (newUsers : MutableList<Users>) {
         users.clear()
         users.addAll(newUsers)
