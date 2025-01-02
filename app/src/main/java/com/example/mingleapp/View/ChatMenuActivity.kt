@@ -36,7 +36,7 @@ class ChatMenuActivity : AppCompatActivity() {
             insets
         }
          authVm = ViewModelProvider(this)[AuthViewModel::class.java]
-//
+
 
         adapter = UserAdapter(mutableListOf(), this)
         setSupportActionBar(binding.toolbar)
