@@ -35,7 +35,7 @@ class ChatMenuActivity : AppCompatActivity() {
 
 
         adapter = UserAdapter(mutableListOf(), this)
-        setSupportActionBar(binding.toolbar
+        setSupportActionBar(binding.toolbar)
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
 
