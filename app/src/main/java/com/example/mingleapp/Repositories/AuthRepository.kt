@@ -7,10 +7,10 @@ import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException
 import com.google.firebase.auth.auth
 
-class FirebaseAuth {
+class AuthRepository {
 
     private val auth = Firebase.auth
-    private val db = FirebaseDatabase()
+    private val db = DatabaseRepository()
 
 
     fun createAccount(birth: String, userName: String, email: String, password: String,imageResourceID: Int, onSuccess: () -> Unit, onFailure: (Exception) -> Unit) {

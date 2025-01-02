@@ -1,9 +1,12 @@
 package com.example.mingleapp.View
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -16,6 +19,7 @@ class SignUpActivity : AppCompatActivity() {
 
     lateinit var binding: ActivitySignUpBinding
     lateinit var authVm: AuthViewModel
+    lateinit var profileImagePicker : ActivityResultLauncher<Intent>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,11 +33,22 @@ class SignUpActivity : AppCompatActivity() {
             insets
         }
 
+        profileImagePicker =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+                if (result.resultCode == Activity.RESULT_OK && result.data != null) {
+                    val selectedImage = result.data?.data
+                    binding.profileImage.setImageURI(selectedImage)
+                }
+            }
+        binding.profileImage.setOnClickListener {
+            val profilePickIntent = Intent(Intent.ACTION_PICK)
+            profilePickIntent.type = "image/*"
+            profileImagePicker.launch(profilePickIntent)
+        }
+
         binding.loginBtn.setOnClickListener {
             createAccount()
         }
-
-
     }
 
     private fun createAccount() {
@@ -42,6 +57,7 @@ class SignUpActivity : AppCompatActivity() {
         val confirmPassword = binding.signupConfirm.text.toString()
         val username = binding.signupUsername.text.toString()
         val birth = binding.signupBirthdate.text.toString()
+
 
 
         if (email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty() || username.isEmpty() || birth.isEmpty()) {
@@ -59,12 +75,13 @@ class SignUpActivity : AppCompatActivity() {
             return
         }
 
-        authVm.createAccount(birth, username, email, password, onSuccess = {
+        authVm.createAccount(birth, username, email, password, imageResourceID = 0, onSuccess = {
             Toast.makeText(this, "Account created", Toast.LENGTH_LONG).show()
             navigateToLogin()
         }, onFailure = {
             Toast.makeText(this, "Account creation failed", Toast.LENGTH_SHORT).show()
-        })
+        },
+        )
     }
     private fun navigateToLogin() {
         val intent = Intent(this, LoginActivity::class.java)

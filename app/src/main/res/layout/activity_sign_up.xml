@@ -7,6 +7,9 @@
     android:layout_height="match_parent"
     tools:context=".View.SignUpActivity">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -97,8 +100,8 @@
 
         <ImageView
             android:id="@+id/profile_image"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
             android:src="@drawable/baseline_person_24"
@@ -112,12 +115,15 @@
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
             android:text="@string/register"
+            android:drawableEnd="@drawable/baseline_done_24"
+            android:drawableTint="@color/turquoise"
             android:fontFamily="@font/acme"
             android:textStyle="bold"
             android:textSize="18sp"
-            android:paddingHorizontal="50dp"
+            android:paddingHorizontal="25dp"
             android:backgroundTint="@color/green"/>
 
 </LinearLayout>
     </LinearLayout>
+    </ScrollView>
 </LinearLayout>
