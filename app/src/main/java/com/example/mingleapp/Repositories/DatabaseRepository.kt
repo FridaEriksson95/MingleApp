@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.mingleapp.Model.Users
 import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.firestore
 
 class DatabaseRepository {
@@ -78,7 +79,15 @@ class DatabaseRepository {
                     Log.d("DatabaseRepo","Error")
                 }
             }
+    }
 
+    fun logOutUser(): LiveData<Boolean> {
+        val logOut = MutableLiveData<Boolean>()
+
+        FirebaseAuth.getInstance().signOut()
+        logOut.postValue(true)
+
+        return logOut
     }
 }
 

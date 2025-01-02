@@ -22,6 +22,8 @@ import com.google.firebase.auth.FirebaseAuth
 class ChatMenuActivity : AppCompatActivity() {
     private lateinit var binding : ActivityChatMenuBinding
     private lateinit var adapter : UserAdapter
+    private lateinit var firebaseViewModel: FirebaseViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -66,22 +68,24 @@ class ChatMenuActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.sign_out -> {
-                logOutUser()
-                true
-            }else -> super.onOptionsItemSelected(item)
-        }
+            return when (item.itemId) {
+                R.id.sign_out -> {
+                    firebaseViewModel.logOutUser().observe(this) { isLoggedOut ->
+                        if (isLoggedOut) {
+                            Toast.makeText(this, "Sign out successful..", Toast.LENGTH_SHORT).show()
+                            navigateToLogin()
+                        } else {
+                            Toast.makeText(this, "Sign out failed.", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                    true
+                } else ->super.onOptionsItemSelected(item)
+            }
     }
-    private fun logOutUser() {
-        FirebaseAuth.getInstance().signOut()
-
-        Toast.makeText(this, "Sign out successful.. ", Toast.LENGTH_SHORT).show()
-
+    private fun navigateToLogin() {
         val logOutIntent = Intent(this, LoginActivity::class.java)
         logOutIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(logOutIntent)
-
         finish()
     }
 }
