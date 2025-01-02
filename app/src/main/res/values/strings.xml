@@ -16,4 +16,5 @@
     <string name="cancel">CANCEL</string>
     <string name="reset">RESET</string>
     <string name="type_message">Type Message</string>
+    <string name="sign_out">sign out</string>
 </resources>
