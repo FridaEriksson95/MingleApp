@@ -8,6 +8,9 @@
     android:background="@color/white"
     tools:context=".View.LoginActivity">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -62,10 +65,11 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp"
                 android:text="@string/login"
+                android:drawableEnd="@drawable/baseline_login_24"
                 android:fontFamily="@font/acme"
                 android:textStyle="bold"
                 android:textSize="18sp"
-                android:paddingHorizontal="50dp"/>
+                android:paddingHorizontal="40dp"/>
 
             <TextView
                 android:id="@+id/forgot_pw"
@@ -92,6 +96,6 @@
 
 
         </LinearLayout>
-
     </LinearLayout>
+    </ScrollView>
 </LinearLayout>
