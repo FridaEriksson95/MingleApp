@@ -25,15 +25,11 @@ class ChatFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
-
-
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
 
             requireActivity().findViewById<View>(R.id.chat_menu_layout).visibility = View.VISIBLE
             requireActivity().findViewById<View>(R.id.fragment_container).visibility = View.GONE
 
         }
-
     }
 }
