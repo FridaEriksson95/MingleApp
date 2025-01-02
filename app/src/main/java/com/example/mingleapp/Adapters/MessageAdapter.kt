@@ -15,7 +15,6 @@ const val MESSAGE_SENT = 2
 
 class MessageAdapter(val context: Context,
                      val messagesList:MutableList<Messages>,
-                     val currentUser: MutableList<Users>,
                      val currentUserId: String)
     : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -63,11 +62,9 @@ class MessageAdapter(val context: Context,
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
 
         val message = messagesList[position]
-        val selectedUser = currentUser[position]
 
         if (holder is SentViewHolder) {
             holder.tvSentMessage.text = message.text
-            holder.tvSentName.text = selectedUser.userName
         } else if (holder is ReceivedViewHolder) {
             holder.tvReceviedMessage.text = message.text
             holder.tvReceivedName.text = message.senderId
