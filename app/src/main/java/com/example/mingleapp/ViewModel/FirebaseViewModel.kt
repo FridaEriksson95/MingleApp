@@ -17,8 +17,4 @@ class FirebaseViewModel : ViewModel() {
     fun onQueryTextChange(query : String) {
         db.onQueryTextChange(query)
     }
-
-    fun logOutUser(): LiveData<Boolean> {
-        return db.logOutUser()
-    }
 }

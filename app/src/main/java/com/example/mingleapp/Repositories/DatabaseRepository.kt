@@ -81,14 +81,6 @@ class DatabaseRepository {
             }
     }
 
-    fun logOutUser(): LiveData<Boolean> {
-        val logOut = MutableLiveData<Boolean>()
-
-        FirebaseAuth.getInstance().signOut()
-        logOut.postValue(true)
-
-        return logOut
-    }
 }
 
 
