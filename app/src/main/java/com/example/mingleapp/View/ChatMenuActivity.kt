@@ -1,6 +1,10 @@
 package com.example.mingleapp.View
 
+import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -11,6 +15,7 @@ import com.example.mingleapp.Adapters.UserAdapter
 import com.example.mingleapp.R
 import com.example.mingleapp.ViewModel.FirebaseViewModel
 import com.example.mingleapp.databinding.ActivityChatMenuBinding
+import com.google.firebase.auth.FirebaseAuth
 
 class ChatMenuActivity : AppCompatActivity() {
     private lateinit var binding : ActivityChatMenuBinding
@@ -25,16 +30,40 @@ class ChatMenuActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        val firebaseViewModel = ViewModelProvider(this)[FirebaseViewModel::class.java]
 
+        setSupportActionBar(binding.toolbar)
         adapter = UserAdapter(mutableListOf())
-
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
 
+        val firebaseViewModel = ViewModelProvider(this)[FirebaseViewModel::class.java]
         firebaseViewModel.users.observe(this) {usersList ->
             adapter.updateData(usersList)
         }
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.sign_out -> {
+                logOutUser()
+                true
+            }else -> super.onOptionsItemSelected(item)
+        }
+    }
+    private fun logOutUser() {
+        FirebaseAuth.getInstance().signOut()
+
+        Toast.makeText(this, "Sign out successful.. ", Toast.LENGTH_SHORT).show()
+
+        val logOutIntent = Intent(this, LoginActivity::class.java)
+        logOutIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(logOutIntent)
+
+        finish()
+    }
 }
