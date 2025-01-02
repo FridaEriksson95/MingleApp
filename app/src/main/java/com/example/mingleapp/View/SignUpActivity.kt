@@ -58,8 +58,6 @@ class SignUpActivity : AppCompatActivity() {
         val username = binding.signupUsername.text.toString()
         val birth = binding.signupBirthdate.text.toString()
 
-
-
         if (email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty() || username.isEmpty() || birth.isEmpty()) {
             Toast.makeText(this, "Please fill all fields", Toast.LENGTH_SHORT).show()
             return
@@ -88,7 +86,3 @@ class SignUpActivity : AppCompatActivity() {
         startActivity(intent)
     }
 }
-
-
-
-

@@ -13,14 +13,10 @@ class MessageRepository {
     private val db = Firebase.firestore
     private val auth = Firebase.auth
 
-
     fun sendMessage(text: String, chatId: String) {
-
         val currentUser = auth.currentUser
         val uid = currentUser?.uid ?: ""
-
-        val message = Messages(text, uid, System.currentTimeMillis())
-
+        val message = Messages(text, uid, System.currentTimeMillis().toString())
 
         db.collection("chats")
             .document(chatId)
@@ -37,37 +33,19 @@ class MessageRepository {
     fun messageSnapShotListener(chatId: String, onSuccess: (List<Messages>) -> Unit, onFailure: (Exception) -> Unit) {
 
         db.collection("chats").document(chatId).collection("messages").orderBy("timestamp").addSnapshotListener { snapshot, error ->
-
             val messages = mutableListOf<Messages>()
-
             if (snapshot != null && !snapshot.isEmpty) {
 
                 for (document in snapshot.documents) {
-
                     val message = document.toObject(Messages::class.java)
-
                     if (message != null) {
                         messages.add(message)
                     }
-
                 }
                 onSuccess(messages)
-
             } else {
-
                 onFailure(Exception("No messages found ${error?.message}"))
-
             }
-
         }
-
-
-
-
-
     }
-
-
-
-
 }

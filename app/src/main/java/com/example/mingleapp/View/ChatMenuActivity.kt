@@ -37,7 +37,6 @@ class ChatMenuActivity : AppCompatActivity() {
         }
          authVm = ViewModelProvider(this)[AuthViewModel::class.java]
 
-
         adapter = UserAdapter(mutableListOf(), this)
         setSupportActionBar(binding.toolbar)
         binding.recyclerView.adapter = adapter
@@ -59,9 +58,7 @@ class ChatMenuActivity : AppCompatActivity() {
                 }
                 return true
             }
-
         })
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

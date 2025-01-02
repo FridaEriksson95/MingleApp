@@ -29,18 +29,14 @@ class MessageViewModel: ViewModel() {
 
     fun listenForMessages(chatId: String) {
         messageRepository.messageSnapShotListener(chatId, onSuccess = { fetch ->
-
             _messages.value = fetch
 
         }, onFailure = { e ->
-
             Log.d("MessageViewModel", "Error: ${e.message}")
         })
-
     }
 
     fun getCurrentUserId(): String {
         return auth.currentUser?.uid ?: ""
     }
-
 }

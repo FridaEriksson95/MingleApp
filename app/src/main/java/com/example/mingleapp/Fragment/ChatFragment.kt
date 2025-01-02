@@ -20,7 +20,6 @@ import com.example.mingleapp.databinding.FragmentChatBinding
 class ChatFragment : Fragment() {
 
     private lateinit var binding: FragmentChatBinding
-
     lateinit var messageAdapter: MessageAdapter
     lateinit var vm: MessageViewModel
 
@@ -52,53 +51,46 @@ class ChatFragment : Fragment() {
         setupRecycleView()
         vm.listenForMessages(chatId)
 
-        vm.messages.observe(viewLifecycleOwner) { messageList ->
+        vm.users.observe(viewLifecycleOwner) { userList ->
+            vm.messages.observe(viewLifecycleOwner) { messageList ->
 
-            messageAdapter.updateData(messageList.toMutableList())
-
-            binding.chatRv.scrollToPosition(messageList.size - 1)
+                val updateMessages = messageList.map { message ->
+                    val sender = userList.find { it.uid == message.senderId }
+                    message.senderName = sender?.userName ?: "unknown"
+                    message
+                }
+                messageAdapter.updateData(updateMessages.toMutableList())
+                binding.chatRv.scrollToPosition(updateMessages.size - 1)
+            }
         }
 
+            binding.sendBtn.setOnClickListener {
 
-        binding.sendBtn.setOnClickListener {
+                val inputMessage = binding.typeMessageEt.text.toString()
+                if (inputMessage.isNotEmpty()) {
 
-            val inputMessage = binding.typeMessageEt.text.toString()
-            if (inputMessage.isNotEmpty()) {
+                    vm.sendMessage(inputMessage, chatId)
+                    binding.typeMessageEt.text.clear()
 
-                vm.sendMessage(inputMessage, chatId)
-                binding.typeMessageEt.text.clear()
-
-            } else {
-                Toast.makeText(requireContext(), "Please enter a message", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(requireContext(), "Please enter a message", Toast.LENGTH_SHORT)
+                        .show()
+                }
             }
 
+            requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+                requireActivity().findViewById<View>(R.id.chat_menu_layout).visibility =
+                    View.VISIBLE
+                requireActivity().findViewById<View>(R.id.fragment_container).visibility = View.GONE
+
+            }
         }
 
-        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+        fun setupRecycleView() {
 
-            requireActivity().findViewById<View>(R.id.chat_menu_layout).visibility = View.VISIBLE
-            requireActivity().findViewById<View>(R.id.fragment_container).visibility = View.GONE
-
+            messageAdapter =
+                MessageAdapter(requireContext(), mutableListOf(), vm.getCurrentUserId())
+            binding.chatRv.adapter = messageAdapter
+            binding.chatRv.layoutManager = LinearLayoutManager(requireContext())
         }
     }
-
-    fun setupRecycleView() {
-
-        messageAdapter = MessageAdapter(requireContext(), mutableListOf(), vm.getCurrentUserId())
-        binding.chatRv.adapter = messageAdapter
-        binding.chatRv.layoutManager = LinearLayoutManager(requireContext())
-
-
-
-
-
-
-
-    }
-
-}
-
-
-// TODO:
-//  Byt viewmodel
-// kolla variabler?
