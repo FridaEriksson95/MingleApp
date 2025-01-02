@@ -81,7 +81,7 @@ class ChatFragment : Fragment() {
 
     fun setupRecycleView() {
 
-        messageAdapter = MessageAdapter(requireContext(), mutableListOf(), vm.users)
+        messageAdapter = MessageAdapter(requireContext(), mutableListOf(), vm.getCurrentUserId())
         binding.chatRv.adapter = messageAdapter
         binding.chatRv.layoutManager = LinearLayoutManager(requireContext())
 
