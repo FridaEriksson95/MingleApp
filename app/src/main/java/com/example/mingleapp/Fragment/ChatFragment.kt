@@ -39,6 +39,9 @@ class ChatFragment : Fragment() {
 
         val currentUserId = vm.getCurrentUserId()
         val otherUser = arguments?.getString("uid") ?: ""
+        val otherUserName = arguments?.getString("userName") ?: "Error"
+
+        binding.nameChatTv.text = otherUserName
 
         val chatId = if (currentUserId > otherUser) {
             "$currentUserId-$otherUser"

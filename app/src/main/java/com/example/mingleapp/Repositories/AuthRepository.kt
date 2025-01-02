@@ -22,7 +22,7 @@ class AuthRepository {
 
                 val currentUser = auth.currentUser
                 val uid = currentUser?.uid ?: ""
-                db.addUser(email, uid, userName, birth,imageResourceID)
+                db.addUser(userName, email, uid,birth, imageResourceID)
 
                 onSuccess()
 
