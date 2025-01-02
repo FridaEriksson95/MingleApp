@@ -32,7 +32,7 @@ class ChatMenuActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-
+//
 
         adapter = UserAdapter(mutableListOf(), this)
         setSupportActionBar(binding.toolbar)
