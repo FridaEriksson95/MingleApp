@@ -1,6 +1,7 @@
 package com.example.mingleapp.Adapters
 
 import android.content.Context
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -43,6 +44,11 @@ class UserAdapter(
         holder.itemView.setOnClickListener {
 
             val chatFragment = ChatFragment()
+
+            val bundle = Bundle()
+            bundle.putString("uid", user.uid)
+            bundle.putString("userName", user.userName)
+            chatFragment.arguments = bundle
 
             val activity = context as AppCompatActivity
 
