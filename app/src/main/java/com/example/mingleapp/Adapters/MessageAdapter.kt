@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mingleapp.Model.Messages
@@ -13,9 +14,9 @@ import com.example.mingleapp.R
 const val MESSAGE_RECEIVED = 1
 const val MESSAGE_SENT = 2
 
-class MessageAdapter(val context: Context,
-                     val messagesList:MutableList<Messages>,
-                     val currentUserId: String)
+class MessageAdapter(
+    val messagesList:MutableList<Messages>,
+    val currentUserId: String)
     : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     inner class SentViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -41,16 +42,16 @@ class MessageAdapter(val context: Context,
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         if (viewType == MESSAGE_SENT) {
-            val view = LayoutInflater.from(context).inflate(R.layout.chat_right, parent, false)
+            val view = LayoutInflater.from(parent.context).inflate(R.layout.chat_right, parent, false)
             return SentViewHolder(view)
         } else {
-            val view = LayoutInflater.from(context).inflate(R.layout.chat_left, parent, false)
+            val view = LayoutInflater.from(parent.context).inflate(R.layout.chat_left, parent, false)
             return ReceivedViewHolder(view)
         }
     }
 
     override fun getItemCount(): Int {
-       return messagesList.size
+        return messagesList.size
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {

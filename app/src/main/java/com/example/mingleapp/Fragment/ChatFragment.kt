@@ -64,33 +64,37 @@ class ChatFragment : Fragment() {
             }
         }
 
-            binding.sendBtn.setOnClickListener {
+        binding.sendBtn.setOnClickListener {
 
-                val inputMessage = binding.typeMessageEt.text.toString()
-                if (inputMessage.isNotEmpty()) {
+            val inputMessage = binding.typeMessageEt.text.toString()
+            if (inputMessage.isNotEmpty()) {
 
-                    vm.sendMessage(inputMessage, chatId)
-                    binding.typeMessageEt.text.clear()
+                vm.sendMessage(inputMessage, chatId)
+                binding.typeMessageEt.text.clear()
 
-                } else {
-                    Toast.makeText(requireContext(), "Please enter a message", Toast.LENGTH_SHORT)
-                        .show()
-                }
-            }
-
-            requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
-                requireActivity().findViewById<View>(R.id.chat_menu_layout).visibility =
-                    View.VISIBLE
-                requireActivity().findViewById<View>(R.id.fragment_container).visibility = View.GONE
-
+            } else {
+                Toast.makeText(requireContext(), "Please enter a message", Toast.LENGTH_SHORT)
+                    .show()
             }
         }
 
-        fun setupRecycleView() {
+        binding.likeBtn.setOnClickListener {
 
-            messageAdapter =
-                MessageAdapter(requireContext(), mutableListOf(), vm.getCurrentUserId())
-            binding.chatRv.adapter = messageAdapter
-            binding.chatRv.layoutManager = LinearLayoutManager(requireContext())
+            val thumbsUp = "\uD83D\uDC4D"
+            vm.sendMessage(thumbsUp, chatId)
+
+        }
+
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+            requireActivity().findViewById<View>(R.id.chat_menu_layout).visibility = View.VISIBLE
+            requireActivity().findViewById<View>(R.id.fragment_container).visibility = View.GONE
         }
     }
+
+    private fun setupRecycleView() {
+        messageAdapter =
+            MessageAdapter(mutableListOf(), vm.getCurrentUserId())
+        binding.chatRv.adapter = messageAdapter
+        binding.chatRv.layoutManager = LinearLayoutManager(requireContext())
+    }
+}
