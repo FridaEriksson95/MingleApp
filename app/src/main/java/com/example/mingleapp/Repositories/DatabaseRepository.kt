@@ -26,7 +26,7 @@ class DatabaseRepository {
                 val userList = mutableListOf<Users>()
                 for (document in snapshot.documents) {
                     val user = document.toObject(Users::class.java)
-                    if( user != null) {
+                    if (user != null) {
                         user.uid = document.id
                         userList.add(user)
                     }
@@ -46,11 +46,11 @@ class DatabaseRepository {
         }
     }
 
-    fun onQueryTextChange(query : String) {
+    fun onQueryTextChange(query: String) {
         db.collection("users")
-            .whereGreaterThanOrEqualTo("userName",query)
+            .whereGreaterThanOrEqualTo("userName", query)
             .whereLessThanOrEqualTo("userName", query + '\uf8ff')
-            .addSnapshotListener {snapshot, error ->
+            .addSnapshotListener { snapshot, error ->
                 if (snapshot != null) {
                     val userList = mutableListOf<Users>()
                     for (doc in snapshot.documents) {
@@ -61,8 +61,8 @@ class DatabaseRepository {
                         }
                     }
                     _users.value = userList
-                }else {
-                    Log.d("DatabaseRepo","Error")
+                } else {
+                    Log.d("DatabaseRepo", "Error")
                 }
             }
     }
