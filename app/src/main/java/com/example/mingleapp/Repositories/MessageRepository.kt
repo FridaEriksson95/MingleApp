@@ -39,6 +39,7 @@ class MessageRepository {
                 for (document in snapshot.documents) {
                     val message = document.toObject(Messages::class.java)
                     if (message != null) {
+                        message.messageId = document.id
                         messages.add(message)
                     }
                 }
@@ -47,5 +48,18 @@ class MessageRepository {
                 onFailure(Exception("No messages found ${error?.message}"))
             }
         }
+    }
+    fun deleteMessage(messageId : String,chatId: String) {
+        db.collection("chats")
+            .document(chatId)
+            .collection("messages")
+            .document(messageId)
+            .delete()
+            .addOnSuccessListener {
+                Log.d("MessageRepo","Successfully deleted $messageId")
+            }
+            .addOnFailureListener {
+                Log.d("MessageRepo","Failed to delete $messageId")
+            }
     }
 }

@@ -39,4 +39,7 @@ class MessageViewModel: ViewModel() {
     fun getCurrentUserId(): String {
         return auth.currentUser?.uid ?: ""
     }
+    fun deleteMessage(messageId: String, chatId: String) {
+        messageRepository.deleteMessage(messageId,chatId)
+    }
 }
