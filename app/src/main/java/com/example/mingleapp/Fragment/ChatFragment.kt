@@ -21,9 +21,9 @@ import com.example.mingleapp.databinding.FragmentChatBinding
 
 class ChatFragment : Fragment() {
 
-    private lateinit var binding: FragmentChatBinding
+    private var binding: FragmentChatBinding? = null
     lateinit var messageAdapter: MessageAdapter
-    lateinit var vm: MessageViewModel
+    private lateinit var vm: MessageViewModel
     private lateinit var chatId : String
 
     override fun onCreateView(
@@ -31,7 +31,7 @@ class ChatFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentChatBinding.inflate(inflater, container, false)
-        return binding.root
+        return binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -43,7 +43,7 @@ class ChatFragment : Fragment() {
         val otherUser = arguments?.getString("uid") ?: ""
         val otherUserName = arguments?.getString("userName") ?: "Error"
 
-        binding.nameChatTv.text = otherUserName
+        binding?.nameChatTv?.text = otherUserName
 
         chatId = if (currentUserId > otherUser) {
             "$currentUserId-$otherUser"
@@ -63,17 +63,17 @@ class ChatFragment : Fragment() {
                     message
                 }
                 messageAdapter.updateData(updateMessages.toMutableList())
-                binding.chatRv.scrollToPosition(updateMessages.size - 1)
+                binding?.chatRv?.scrollToPosition(updateMessages.size - 1)
             }
         }
 
-        binding.sendBtn.setOnClickListener {
+        binding?.sendBtn?.setOnClickListener {
 
-            val inputMessage = binding.typeMessageEt.text.toString()
+            val inputMessage = binding?.typeMessageEt?.text.toString()
             if (inputMessage.isNotEmpty()) {
 
                 vm.sendMessage(inputMessage, chatId)
-                binding.typeMessageEt.text.clear()
+                binding?.typeMessageEt?.text?.clear()
 
             } else {
                 Toast.makeText(requireContext(), "Please enter a message", Toast.LENGTH_SHORT)
@@ -81,7 +81,7 @@ class ChatFragment : Fragment() {
             }
         }
 
-        binding.likeBtn.setOnClickListener {
+        binding?.likeBtn?.setOnClickListener {
 
             val thumbsUp = "\uD83D\uDC4D"
             vm.sendMessage(thumbsUp, chatId)
@@ -95,7 +95,8 @@ class ChatFragment : Fragment() {
 
         val itemTouchHelper = ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(
             ItemTouchHelper.UP or ItemTouchHelper.DOWN, // Allows vertical movement
-            ItemTouchHelper.LEFT) {
+            ItemTouchHelper.LEFT)
+        {
             override fun onMove(
                 recyclerView: RecyclerView,
                 viewHolder: RecyclerView.ViewHolder,
@@ -111,7 +112,7 @@ class ChatFragment : Fragment() {
             }
 
         })
-          itemTouchHelper.attachToRecyclerView(binding.chatRv)
+          itemTouchHelper.attachToRecyclerView(binding?.chatRv)
 
     }
 
@@ -120,7 +121,12 @@ class ChatFragment : Fragment() {
             MessageAdapter(mutableListOf(), vm.getCurrentUserId()) { messageId ->
                 vm.deleteMessage(messageId, chatId)
             }
-        binding.chatRv.adapter = messageAdapter
-        binding.chatRv.layoutManager = LinearLayoutManager(requireContext())
+        binding?.chatRv?.adapter = messageAdapter
+        binding?.chatRv?.layoutManager = LinearLayoutManager(requireContext())
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
     }
 }

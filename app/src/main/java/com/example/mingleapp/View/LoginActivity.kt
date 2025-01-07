@@ -4,6 +4,7 @@ import android.content.Intent
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Patterns
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
@@ -26,7 +27,7 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        
+
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
         authVm = ViewModelProvider(this).get(AuthViewModel::class.java)
@@ -45,24 +46,7 @@ class LoginActivity : AppCompatActivity() {
         }
 
         binding.forgotPw.setOnClickListener{
-            val builder = AlertDialog.Builder(this)
-            val view = layoutInflater.inflate(R.layout.dialog_forgot, null)
-            val userEmail = view.findViewById<EditText>(R.id.editBox)
-
-            builder.setView(view)
-            val dialog = builder.create()
-
-            view.findViewById<Button>(R.id.btnReset).setOnClickListener {
-                compareEmail(userEmail)
-                dialog.dismiss()
-            }
-            view.findViewById<Button>(R.id.btnCancel).setOnClickListener {
-                dialog.dismiss()
-            }
-            if(dialog.window != null){
-                dialog.window!!.setBackgroundDrawable(ColorDrawable(0))
-            }
-            dialog.show()
+          forgotPassword()
         }
     }
 
@@ -76,11 +60,13 @@ class LoginActivity : AppCompatActivity() {
             return
         }
 
+        binding.progressBar.visibility = View.VISIBLE
+
         authVm.signIn(email, password, onSuccess = {
             Toast.makeText(this, "Login successful", Toast.LENGTH_SHORT).show()
             navigateToChatMenu()
         }, onFailure = {
-
+            binding.progressBar.visibility = View.GONE
             Toast.makeText(this, "Login failed", Toast.LENGTH_SHORT).show()
 
         })
@@ -109,5 +95,25 @@ class LoginActivity : AppCompatActivity() {
                 Toast.makeText(this, "Check your email", Toast.LENGTH_SHORT).show()
             }
         }
+    }
+    private fun forgotPassword() {
+        val builder = AlertDialog.Builder(this)
+        val view = layoutInflater.inflate(R.layout.dialog_forgot, null)
+        val userEmail = view.findViewById<EditText>(R.id.editBox)
+
+        builder.setView(view)
+        val dialog = builder.create()
+
+        view.findViewById<Button>(R.id.btnReset).setOnClickListener {
+            compareEmail(userEmail)
+            dialog.dismiss()
+        }
+        view.findViewById<Button>(R.id.btnCancel).setOnClickListener {
+            dialog.dismiss()
+        }
+        if(dialog.window != null){
+            dialog.window!!.setBackgroundDrawable(ColorDrawable(0))
+        }
+        dialog.show()
     }
 }
