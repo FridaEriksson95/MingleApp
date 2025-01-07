@@ -40,19 +40,8 @@ class ChatFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         vm = ViewModelProvider(this).get(MessageViewModel::class.java)
-
-        val currentUserId = vm.getCurrentUserId()
-        val otherUser = arguments?.getString("uid") ?: ""
-        val otherUserName = arguments?.getString("userName") ?: "Error"
-
-        binding.nameChatTv.text = otherUserName
-
-//        Extract to method
-        chatId = if (currentUserId > otherUser) {
-            "$currentUserId-$otherUser"
-        } else {
-            "$otherUser-$currentUserId"
-        }
+        setupBackPressFragment()
+        chatId = generateChatId()
 
         setupRecycleView()
         vm.listenForMessages(chatId)
@@ -90,11 +79,6 @@ class ChatFragment : Fragment() {
             vm.sendMessage(thumbsUp, chatId)
 
         }
-//Extract to method
-        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
-            requireActivity().findViewById<View>(R.id.chat_menu_layout).visibility = View.VISIBLE
-            requireActivity().findViewById<View>(R.id.fragment_container).visibility = View.GONE
-        }
 
         val itemTouchHelper = ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(
             ItemTouchHelper.UP or ItemTouchHelper.DOWN, // Allows vertical movement
@@ -116,6 +100,27 @@ class ChatFragment : Fragment() {
         })
         itemTouchHelper.attachToRecyclerView(binding.chatRv)
 
+    }
+
+    private fun generateChatId() : String {
+        val currentUserId = vm.getCurrentUserId()
+        val otherUser = arguments?.getString("uid") ?: ""
+        val otherUserName = arguments?.getString("userName") ?: "Error"
+
+        binding.nameChatTv.text = otherUserName
+
+        return if (currentUserId > otherUser) {
+            "$currentUserId-$otherUser"
+        } else {
+            "$otherUser-$currentUserId"
+        }
+    }
+
+    private fun setupBackPressFragment() {
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+            requireActivity().findViewById<View>(R.id.chat_menu_layout).visibility = View.VISIBLE
+            requireActivity().findViewById<View>(R.id.fragment_container).visibility = View.GONE
+        }
     }
 
     private fun setupRecycleView() {
