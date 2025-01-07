@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mingleapp.Fragment.ChatFragment
 import com.example.mingleapp.Model.Users
@@ -21,6 +22,7 @@ class UserAdapter(
     inner class UserViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val nameTextView : TextView = itemView.findViewById(R.id.nameTextView)
         val profilePic : ImageView = itemView.findViewById(R.id.recyclerIv)
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
@@ -57,6 +59,9 @@ class UserAdapter(
             activity.findViewById<View>(R.id.fragment_container).visibility = View.VISIBLE
 
         }
+
+    }
+    private fun replaceFragment(fragment: Fragment, bundle: Bundle? = null) {
 
     }
 

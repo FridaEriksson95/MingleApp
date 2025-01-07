@@ -12,13 +12,14 @@
         android:label="@string/app_name"
         android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
-        android:theme="@style/Theme.MingleApp"
+        android:theme="@style/Theme.MingleApp.NoActionBar"
         tools:targetApi="31">
         <activity
             android:name=".View.SignUpActivity"
             android:exported="false" />
         <activity
             android:name=".View.ChatMenuActivity"
+            android:theme="@style/Theme.MingleApp.NoActionBar"
             android:exported="false" />
         <activity
             android:name=".View.LoginActivity"
