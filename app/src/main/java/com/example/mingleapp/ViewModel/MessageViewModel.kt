@@ -42,4 +42,9 @@ class MessageViewModel: ViewModel() {
     fun deleteMessage(messageId: String, chatId: String) {
         messageRepository.deleteMessage(messageId,chatId)
     }
+
+    fun updateMessage(messageId: String, chatId: String, newText: String) {
+        messageRepository.updateMessage(messageId, chatId, newText)
+    }
+
 }
