@@ -16,7 +16,8 @@ const val MESSAGE_SENT = 2
 
 class MessageAdapter(
     val messagesList:MutableList<Messages>,
-    val currentUserId: String)
+    val currentUserId: String,
+    val onMessageDeleted : (messageId : String) -> Unit)
     : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     inner class SentViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -71,4 +72,13 @@ class MessageAdapter(
         messagesList.addAll(newMessages)
         notifyDataSetChanged()
     }
-}
+    fun deleteMessage (position: Int) {
+        val messageid = messagesList[position].messageId
+        messagesList.removeAt(position)
+        notifyItemRemoved(position)
+
+        if (messageid != null) {
+            onMessageDeleted(messageid)
+            }
+        }
+    }
