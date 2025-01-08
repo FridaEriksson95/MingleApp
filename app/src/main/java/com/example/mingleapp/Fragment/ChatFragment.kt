@@ -106,7 +106,7 @@ class ChatFragment : Fragment() {
         val otherUser = arguments?.getString("uid") ?: ""
         val otherUserName = arguments?.getString("userName") ?: "Error"
 
-        binding.nameChatTv.text = otherUserName
+        binding?.nameChatTv?.text = otherUserName
 
         return if (currentUserId > otherUser) {
             "$currentUserId-$otherUser"
@@ -159,5 +159,10 @@ class ChatFragment : Fragment() {
         }
         builder.show()
 
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
     }
 }
