@@ -3,6 +3,7 @@ package com.example.mingleapp.View
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.ActivityResultLauncher
@@ -73,11 +74,13 @@ class SignUpActivity : AppCompatActivity() {
             Toast.makeText(this, "Password must be at least 6 characters long", Toast.LENGTH_SHORT).show()
             return
         }
+        binding.progressBar.visibility = View.VISIBLE
 
         authVm.createAccount(birth, username, email, password, imageResourceID = 0, isFavorite = false, onSuccess = {
             Toast.makeText(this, "Account created", Toast.LENGTH_LONG).show()
             navigateToLogin()
         }, onFailure = {
+            binding.progressBar.visibility = View.GONE
             Toast.makeText(this, "Account creation failed", Toast.LENGTH_SHORT).show()
         },
         )
