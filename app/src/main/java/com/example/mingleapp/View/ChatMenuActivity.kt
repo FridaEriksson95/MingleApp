@@ -2,30 +2,25 @@ package com.example.mingleapp.View
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.SearchView.OnQueryTextListener
-import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.SearchView
-import androidx.appcompat.widget.Toolbar
-import androidx.core.content.ContextCompat.startActivity
 import androidx.core.view.GravityCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.drawerlayout.widget.DrawerLayout
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mingleapp.Adapters.UserAdapter
+import com.example.mingleapp.Fragment.ProfileSettingsFragment
 import com.example.mingleapp.R
 import com.example.mingleapp.ViewModel.AuthViewModel
 import com.example.mingleapp.ViewModel.FirebaseViewModel
 import com.example.mingleapp.databinding.ActivityChatMenuBinding
 import com.google.android.material.navigation.NavigationView
-import com.google.firebase.auth.FirebaseAuth
 
 class ChatMenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     private lateinit var binding: ActivityChatMenuBinding
@@ -96,6 +91,7 @@ class ChatMenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
                 Toast.makeText(this, "favorite selected", Toast.LENGTH_SHORT).show()
             }
             R.id.profile_settings -> {
+                navigateToFragment(ProfileSettingsFragment())
                 Toast.makeText(this, "profile settings selected", Toast.LENGTH_SHORT).show()
             }
             R.id.sign_out -> {
@@ -124,5 +120,15 @@ class ChatMenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
         val chatIntent = Intent(this, ChatMenuActivity::class.java)
         chatIntent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
         startActivity(chatIntent)
+    }
+
+    private fun navigateToFragment(fragment: Fragment) {
+
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, fragment)
+            .addToBackStack(null)
+            .commit()
+
+
     }
 }
