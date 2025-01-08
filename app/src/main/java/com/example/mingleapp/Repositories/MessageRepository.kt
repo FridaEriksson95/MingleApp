@@ -62,4 +62,18 @@ class MessageRepository {
                 Log.d("MessageRepo","Failed to delete $messageId")
             }
     }
+
+    fun updateMessage(messageId: String, chatId: String, newText: String) {
+        db.collection("chats")
+            .document(chatId)
+            .collection("messages")
+            .document(messageId)
+            .update("text", newText)
+            .addOnSuccessListener {
+                Log.d("MessageRepository", "Message updated successfully")
+            }
+            .addOnFailureListener {
+                Log.d("MessageRepository", "Message update failed")
+            }
+    }
 }

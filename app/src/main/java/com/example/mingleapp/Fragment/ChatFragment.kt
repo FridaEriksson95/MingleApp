@@ -1,11 +1,13 @@
 package com.example.mingleapp.Fragment
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.lifecycle.ViewModelProvider
@@ -38,18 +40,8 @@ class ChatFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         vm = ViewModelProvider(this).get(MessageViewModel::class.java)
-
-        val currentUserId = vm.getCurrentUserId()
-        val otherUser = arguments?.getString("uid") ?: ""
-        val otherUserName = arguments?.getString("userName") ?: "Error"
-
-        binding.nameChatTv.text = otherUserName
-
-        chatId = if (currentUserId > otherUser) {
-            "$currentUserId-$otherUser"
-        } else {
-            "$otherUser-$currentUserId"
-        }
+        setupBackPressFragment()
+        chatId = generateChatId()
 
         setupRecycleView()
         vm.listenForMessages(chatId)
@@ -88,11 +80,6 @@ class ChatFragment : Fragment() {
 
         }
 
-        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
-            requireActivity().findViewById<View>(R.id.chat_menu_layout).visibility = View.VISIBLE
-            requireActivity().findViewById<View>(R.id.fragment_container).visibility = View.GONE
-        }
-
         val itemTouchHelper = ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(
             ItemTouchHelper.UP or ItemTouchHelper.DOWN, // Allows vertical movement
             ItemTouchHelper.LEFT) {
@@ -111,16 +98,68 @@ class ChatFragment : Fragment() {
             }
 
         })
-          itemTouchHelper.attachToRecyclerView(binding.chatRv)
+        itemTouchHelper.attachToRecyclerView(binding.chatRv)
 
     }
 
+    private fun generateChatId() : String {
+        val currentUserId = vm.getCurrentUserId()
+        val otherUser = arguments?.getString("uid") ?: ""
+        val otherUserName = arguments?.getString("userName") ?: "Error"
+
+        binding.nameChatTv.text = otherUserName
+
+        return if (currentUserId > otherUser) {
+            "$currentUserId-$otherUser"
+        } else {
+            "$otherUser-$currentUserId"
+        }
+    }
+
+    private fun setupBackPressFragment() {
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+            requireActivity().findViewById<View>(R.id.chat_menu_layout).visibility = View.VISIBLE
+            requireActivity().findViewById<View>(R.id.fragment_container).visibility = View.GONE
+        }
+    }
+
     private fun setupRecycleView() {
-        messageAdapter =
-            MessageAdapter(mutableListOf(), vm.getCurrentUserId()) { messageId ->
+        messageAdapter = MessageAdapter(
+            mutableListOf(),
+            vm.getCurrentUserId(),
+            onMessageDeleted = { messageId ->
                 vm.deleteMessage(messageId, chatId)
-            }
+            },
+            onMessageEditRequest = { messageId, oldText ->
+                showEditDialog(messageId, oldText)
+
+            })
         binding.chatRv.adapter = messageAdapter
         binding.chatRv.layoutManager = LinearLayoutManager(requireContext())
+    }
+
+    private fun showEditDialog(messageId: String, oldText: String) {
+        val builder = AlertDialog.Builder(requireContext())
+        val inputField = EditText(requireContext()).apply {
+            setText(oldText)
+        }
+
+        builder.setTitle("Edit Message")
+        builder.setView(inputField)
+
+        builder.setPositiveButton("OK") { dialog, _ ->
+            val newText = inputField.text.toString()
+            if (newText.isNotEmpty()) {
+                vm.updateMessage(messageId, chatId, newText)
+            }
+            dialog.dismiss()
+        }
+
+        builder.setNegativeButton("Cancel") { dialog, _ ->
+            dialog.dismiss()
+
+        }
+        builder.show()
+
     }
 }

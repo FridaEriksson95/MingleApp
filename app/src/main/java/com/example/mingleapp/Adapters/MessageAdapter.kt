@@ -19,7 +19,8 @@ const val MESSAGE_SENT = 2
 class MessageAdapter(
     val messagesList:MutableList<Messages>,
     val currentUserId: String,
-    val onMessageDeleted : (messageId : String) -> Unit)
+    val onMessageDeleted : (messageId : String) -> Unit,
+    val onMessageEditRequest: (messageId: String, oldText: String) -> Unit)
     : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     inner class SentViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -68,7 +69,15 @@ class MessageAdapter(
         if (holder is SentViewHolder) {
             holder.tvSentMessage.text = message.text
             holder.tvSentName.text = message.senderName
+            holder.itemView.setOnClickListener {
+
+                val messageId = message.messageId
+                if (messageId != null) {
+                    onMessageEditRequest(messageId, message.text)
+                }
+            }
             holder.tvSentTime.text = showTimeString
+
         } else if (holder is ReceivedViewHolder) {
             holder.tvReceviedMessage.text = message.text
             holder.tvReceivedName.text = message.senderName
