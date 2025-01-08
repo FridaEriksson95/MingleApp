@@ -17,9 +17,11 @@ import androidx.core.view.GravityCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mingleapp.Adapters.UserAdapter
+import com.example.mingleapp.Fragment.FavoritesFragment
 import com.example.mingleapp.R
 import com.example.mingleapp.ViewModel.AuthViewModel
 import com.example.mingleapp.ViewModel.FirebaseViewModel
@@ -31,6 +33,8 @@ class ChatMenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
     private lateinit var binding: ActivityChatMenuBinding
     private lateinit var adapter: UserAdapter
     private lateinit var authVm: AuthViewModel
+
+    var favoriteFragment = FavoritesFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,7 +51,7 @@ class ChatMenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
         authVm = ViewModelProvider(this)[AuthViewModel::class.java]
         val firebaseViewModel = ViewModelProvider(this)[FirebaseViewModel::class.java]
 
-        adapter = UserAdapter(mutableListOf(), this)
+        adapter = UserAdapter(mutableListOf(), this, firebaseViewModel)
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
 
@@ -93,7 +97,8 @@ class ChatMenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
                 }
             }
             R.id.favorites -> {
-                Toast.makeText(this, "favorite selected", Toast.LENGTH_SHORT).show()
+                adapter.replaceFragmentTest(this, favoriteFragment)
+                supportActionBar?.title = "Favorites"
             }
             R.id.profile_settings -> {
                 Toast.makeText(this, "profile settings selected", Toast.LENGTH_SHORT).show()
