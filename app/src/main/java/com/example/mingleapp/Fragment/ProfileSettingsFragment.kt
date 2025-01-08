@@ -61,52 +61,52 @@ class ProfileSettingsFragment : Fragment() {
 
 
 //    change profile picture = show dialog?, new picture?, new activity?
-    private fun showEditDialogChangeUserName(messageId: String, oldText: String) {
-        val builder = AlertDialog.Builder(requireContext())
-        val inputField = EditText(requireContext()).apply {
-            setText(oldText)
-        }
-
-        builder.setTitle("Edit Message")
-        builder.setView(inputField)
-
-        builder.setPositiveButton("OK") { dialog, _ ->
-            val newText = inputField.text.toString()
-            if (newText.isNotEmpty()) {
-                vm.updateMessage(messageId, chatId, newText)
-            }
-            dialog.dismiss()
-        }
-
-        builder.setNegativeButton("Cancel") { dialog, _ ->
-            dialog.dismiss()
-        }
-        builder.show()
-
-    }
-    private fun showEditDialogDeleteAccount(messageId: String, oldText: String) {
-        val builder = AlertDialog.Builder(requireContext())
-        val inputField = EditText(requireContext()).apply {
-            setText(oldText)
-        }
-
-        builder.setTitle("Edit Message")
-        builder.setView(inputField)
-
-        builder.setPositiveButton("OK") { dialog, _ ->
-            val newText = inputField.text.toString()
-            if (newText.isNotEmpty()) {
-                vm.updateMessage(messageId, chatId, newText)
-            }
-            dialog.dismiss()
-        }
-
-        builder.setNegativeButton("Cancel") { dialog, _ ->
-            dialog.dismiss()
-        }
-        builder.show()
-
-    }
+//    private fun showEditDialogChangeUserName(messageId: String, oldText: String) {
+//        val builder = AlertDialog.Builder(requireContext())
+//        val inputField = EditText(requireContext()).apply {
+//            setText(oldText)
+//        }
+//
+//        builder.setTitle("Edit Message")
+//        builder.setView(inputField)
+//
+//        builder.setPositiveButton("OK") { dialog, _ ->
+//            val newText = inputField.text.toString()
+//            if (newText.isNotEmpty()) {
+//                vm.updateMessage(messageId, chatId, newText)
+//            }
+//            dialog.dismiss()
+//        }
+//
+//        builder.setNegativeButton("Cancel") { dialog, _ ->
+//            dialog.dismiss()
+//        }
+//        builder.show()
+//
+//    }
+//    private fun showEditDialogDeleteAccount(messageId: String, oldText: String) {
+//        val builder = AlertDialog.Builder(requireContext())
+//        val inputField = EditText(requireContext()).apply {
+//            setText(oldText)
+//        }
+//
+//        builder.setTitle("Edit Message")
+//        builder.setView(inputField)
+//
+//        builder.setPositiveButton("OK") { dialog, _ ->
+//            val newText = inputField.text.toString()
+//            if (newText.isNotEmpty()) {
+//                vm.updateMessage(messageId, chatId, newText)
+//            }
+//            dialog.dismiss()
+//        }
+//
+//        builder.setNegativeButton("Cancel") { dialog, _ ->
+//            dialog.dismiss()
+//        }
+//        builder.show()
+//
+//    }
 
 
 }
