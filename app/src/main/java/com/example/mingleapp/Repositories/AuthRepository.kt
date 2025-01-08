@@ -67,4 +67,18 @@ class AuthRepository {
     fun getCurrentUserId() : String {
         return auth.currentUser?.uid ?: ""
     }
+
+    fun deleteAccount(onSuccess: () -> Unit, onFailure: (Exception) -> Unit) {
+        db.deleteUser(getCurrentUserId(), onSuccess = {
+            Log.d("DatabaseRepository", "User data deleted successfully")
+        }, onFailure = { exception ->
+            Log.d("DatabaseRepository", "User deletion failed: ${exception.message}")
+        })
+        auth.currentUser?.delete()?.addOnSuccessListener {
+            onSuccess()
+        }
+            ?.addOnFailureListener {
+                exception -> onFailure(exception)
+            }
+    }
 }

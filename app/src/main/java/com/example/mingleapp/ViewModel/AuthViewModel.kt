@@ -33,4 +33,8 @@ class AuthViewModel: ViewModel() {
     fun getCurrentUserId() : String {
         return authRepository.getCurrentUserId()
     }
+
+    fun deleteAccount(onSuccess: () -> Unit, onFailure: (Exception) -> Unit) {
+        authRepository.deleteAccount(onSuccess, onFailure)
+    }
 }

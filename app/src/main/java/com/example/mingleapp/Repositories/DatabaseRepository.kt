@@ -94,7 +94,7 @@ class DatabaseRepository {
             }
     }
 
-    fun deleteUser(uid: String) {
+    fun deleteUser(uid: String, onSuccess: () -> Unit, onFailure: (Exception) -> Unit) {
         db.collection("users")
             .document(uid)
             .delete()
