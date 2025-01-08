@@ -73,32 +73,10 @@ class ChatFragment : Fragment() {
         }
 
         binding?.likeBtn?.setOnClickListener {
-
             val thumbsUp = "\uD83D\uDC4D"
             vm.sendMessage(thumbsUp, chatId)
-
         }
-
-        val itemTouchHelper = ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(
-            ItemTouchHelper.UP or ItemTouchHelper.DOWN, // Allows vertical movement
-            ItemTouchHelper.LEFT)
-        {
-            override fun onMove(
-                recyclerView: RecyclerView,
-                viewHolder: RecyclerView.ViewHolder,
-                target: RecyclerView.ViewHolder
-            ): Boolean {
-                return false
-            }
-
-            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                val position = viewHolder.adapterPosition
-                messageAdapter.deleteMessage(position)
-
-            }
-        })
-
-          itemTouchHelper.attachToRecyclerView(binding?.chatRv)
+        swipeFunction()
     }
 
     private fun generateChatId() : String {
@@ -159,6 +137,28 @@ class ChatFragment : Fragment() {
         }
         builder.show()
 
+    }
+    private fun swipeFunction(){
+        val itemTouchHelper = ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(
+            ItemTouchHelper.UP or ItemTouchHelper.DOWN, // Allows vertical movement
+            ItemTouchHelper.LEFT)
+        {
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                return false
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val position = viewHolder.adapterPosition
+                messageAdapter.deleteMessage(position)
+
+            }
+        })
+
+        itemTouchHelper.attachToRecyclerView(binding?.chatRv)
     }
 
     override fun onDestroyView() {

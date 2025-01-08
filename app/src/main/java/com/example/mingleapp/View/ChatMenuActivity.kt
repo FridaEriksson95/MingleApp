@@ -33,7 +33,7 @@ class ChatMenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
     private lateinit var binding: ActivityChatMenuBinding
     private lateinit var adapter: UserAdapter
     private lateinit var authVm: AuthViewModel
-
+    private lateinit var firebaseViewModel: FirebaseViewModel
     var favoriteFragment = FavoritesFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,12 +48,8 @@ class ChatMenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
             insets
         }
 
-        authVm = ViewModelProvider(this)[AuthViewModel::class.java]
-        val firebaseViewModel = ViewModelProvider(this)[FirebaseViewModel::class.java]
-
-        adapter = UserAdapter(mutableListOf(), this, firebaseViewModel)
-        binding.recyclerView.adapter = adapter
-        binding.recyclerView.layoutManager = LinearLayoutManager(this)
+       getViewModelInstance()
+        recyclerViewSetup()
 
         setSupportActionBar(binding.toolbar)
         binding.navMenu.setNavigationItemSelectedListener(this)
@@ -129,5 +125,14 @@ class ChatMenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
         val chatIntent = Intent(this, ChatMenuActivity::class.java)
         chatIntent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
         startActivity(chatIntent)
+    }
+    private fun recyclerViewSetup(){
+        adapter = UserAdapter(mutableListOf(), this, firebaseViewModel)
+        binding.recyclerView.adapter = adapter
+        binding.recyclerView.layoutManager = LinearLayoutManager(this)
+    }
+    private fun getViewModelInstance() {
+        authVm = ViewModelProvider(this)[AuthViewModel::class.java]
+        firebaseViewModel = ViewModelProvider(this)[FirebaseViewModel::class.java]
     }
 }

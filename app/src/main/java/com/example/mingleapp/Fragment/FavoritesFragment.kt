@@ -25,21 +25,27 @@ class FavoritesFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentFavoritesBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         fireBaseViewModel = ViewModelProvider(this)[FirebaseViewModel::class.java]
-        adapter = UserAdapter(mutableListOf(), requireContext(), fireBaseViewModel)
 
-        binding.favoritesRV.layoutManager = LinearLayoutManager(context)
-        binding.favoritesRV.adapter = adapter
+        recyclerViewSetup()
 
         fireBaseViewModel.favoriteUsers.observe(viewLifecycleOwner) { favoriteUsers ->
             adapter.updateData(favoriteUsers)
         }
-        return binding.root
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+        override fun onDestroyView() {
+            super.onDestroyView()
+            _binding = null
+        }
+    private fun recyclerViewSetup(){
+        adapter = UserAdapter(mutableListOf(), requireContext(), fireBaseViewModel)
+        binding.favoritesRV.layoutManager = LinearLayoutManager(context)
+        binding.favoritesRV.adapter = adapter
     }
 }

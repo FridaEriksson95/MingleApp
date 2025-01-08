@@ -34,18 +34,8 @@ class SignUpActivity : AppCompatActivity() {
             insets
         }
 
-        profileImagePicker =
-            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-                if (result.resultCode == Activity.RESULT_OK && result.data != null) {
-                    val selectedImage = result.data?.data
-                    binding.profileImage.setImageURI(selectedImage)
-                }
-            }
-        binding.profileImage.setOnClickListener {
-            val profilePickIntent = Intent(Intent.ACTION_PICK)
-            profilePickIntent.type = "image/*"
-            profileImagePicker.launch(profilePickIntent)
-        }
+        profileImagePicker()
+
 
         binding.loginBtn.setOnClickListener {
             createAccount()
@@ -88,5 +78,20 @@ class SignUpActivity : AppCompatActivity() {
     private fun navigateToLogin() {
         val intent = Intent(this, LoginActivity::class.java)
         startActivity(intent)
+    }
+
+    private fun profileImagePicker() {
+        profileImagePicker =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+                if (result.resultCode == Activity.RESULT_OK && result.data != null) {
+                    val selectedImage = result.data?.data
+                    binding.profileImage.setImageURI(selectedImage)
+                }
+            }
+        binding.profileImage.setOnClickListener {
+            val profilePickIntent = Intent(Intent.ACTION_PICK)
+            profilePickIntent.type = "image/*"
+            profileImagePicker.launch(profilePickIntent)
+        }
     }
 }
