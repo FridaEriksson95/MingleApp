@@ -3,12 +3,34 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/favorite_layout"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Fragment.FavoritesFragment">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="favorites" />
+   <androidx.constraintlayout.widget.ConstraintLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content">
+   <TextView
+      android:id="@+id/favoritesTV"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+      android:padding="30dp"
+      android:text="@string/FAVORITES"
+      android:fontFamily="@font/acme"
+      android:textSize="35sp"
+      android:gravity="center"
+       app:layout_constraintTop_toTopOf="parent"
+      android:background="@drawable/border"/>
+
+
+   <androidx.recyclerview.widget.RecyclerView
+       android:id="@+id/favoritesRV"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       app:layout_constraintTop_toBottomOf="@+id/favoritesTV"
+       android:layout_marginTop="5dp"
+       tools:listitem="@layout/chat_menu_user"
+       android:layout_gravity="center"/>
+   </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>
