@@ -82,7 +82,7 @@ class DatabaseRepository {
                     Log.d("DatabaseRepo", "Error")
                 }
             }
-    }
+
 
     fun updateUserFavoriteStatus(user: Users, isFavorite: Boolean) {
         db.collection("users").document(user.uid ?: "").update("isFavorite", isFavorite)
