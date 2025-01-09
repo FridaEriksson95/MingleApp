@@ -26,4 +26,5 @@
     <string name="change_username">Change username</string>
     <string name="delete_account">Delete account</string>
     <string name="FAVORITES">FAVORITES</string>
+    <string name="chat_name">Robin Jakobsson</string>
 </resources>
