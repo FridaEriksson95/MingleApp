@@ -41,7 +41,7 @@ class UserAdapter(
     override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
         val user = users[position]
         holder.nameTextView.text = user.userName
-        holder.profilePic.setImageResource(user.imageResourceID)
+        holder.profilePic.setImageResource(R.drawable.baseline_person_24)
 
         val favoriteIcon = if(user.isFavorite) R.drawable.baseline_star_24 else R.drawable.baseline_star_border_24
         holder.favoriteBtn.setBackgroundResource(favoriteIcon)
