@@ -129,6 +129,7 @@ class ChatMenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
             .replace(R.id.fragment_container, fragment)
             .addToBackStack(null)
             .commit()
+    }
 
 
     private fun recyclerViewSetup(){
