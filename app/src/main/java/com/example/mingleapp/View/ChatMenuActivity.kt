@@ -131,7 +131,6 @@ class ChatMenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
             .commit()
     }
 
-
     private fun recyclerViewSetup(){
         adapter = UserAdapter(mutableListOf(), this, firebaseViewModel)
         binding.recyclerView.adapter = adapter

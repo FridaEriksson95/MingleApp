@@ -23,7 +23,7 @@ class FirebaseViewModel : ViewModel() {
     fun updateUsername(uid: String, newUserName: String) {
         db.updateUsername(uid, newUserName)
     }
-
+    
     fun updateFavoriteStatus(user: Users) {
         db.updateUserFavoriteStatus(user, user.isFavorite)
     }
