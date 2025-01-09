@@ -21,6 +21,7 @@ class ProfileSettingsFragment : Fragment() {
 
     private var binding: FragmentProfileSettingsBinding? = null
     private lateinit var authViewModel: AuthViewModel
+    private lateinit var firebaseViewModel: FirebaseViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,27 +34,27 @@ class ProfileSettingsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
         authViewModel = ViewModelProvider(this)[AuthViewModel::class.java]
+        firebaseViewModel = ViewModelProvider(this)[FirebaseViewModel::class.java]
 
 
-
+        binding?.btnChangeUsername?.setOnClickListener {
+            showChangeUsernameDialog()
+        }
 
         binding?.btnDeleteAccount?.setOnClickListener {
-
             showDeleteAccountDialog()
         }
     }
-
 
     override fun onDestroyView() {
         super.onDestroyView()
         binding = null
     }
 
-
-
-
+    /*
+    Deletes account
+     */
     private fun showDeleteAccountDialog() {
         val builder = AlertDialog.Builder(requireContext())
         builder.setTitle("Confirm Deletion")
@@ -82,55 +83,33 @@ class ProfileSettingsFragment : Fragment() {
         })
     }
 
+    /*
+        Changes username
+     */
+    private fun showChangeUsernameDialog() {
+        val builder = AlertDialog.Builder(requireContext())
+        val inputField = EditText(requireContext()).apply {
+            hint = "Enter new username"
+        }
 
+        builder.setTitle("Change Username")
+        builder.setView(inputField)
 
-//    change profile picture = show dialog?, new picture?, new activity?
-//    private fun showEditDialogChangeUserName(messageId: String, oldText: String) {
-//        val builder = AlertDialog.Builder(requireContext())
-//        val inputField = EditText(requireContext()).apply {
-//            setText(oldText)
-//        }
-//
-//        builder.setTitle("Edit Message")
-//        builder.setView(inputField)
-//
-//        builder.setPositiveButton("OK") { dialog, _ ->
-//            val newText = inputField.text.toString()
-//            if (newText.isNotEmpty()) {
-//                vm.updateMessage(messageId, chatId, newText)
-//            }
-//            dialog.dismiss()
-//        }
-//
-//        builder.setNegativeButton("Cancel") { dialog, _ ->
-//            dialog.dismiss()
-//        }
-//        builder.show()
-//
-//    }
-//    private fun showEditDialogDeleteAccount(messageId: String, oldText: String) {
-//        val builder = AlertDialog.Builder(requireContext())
-//        val inputField = EditText(requireContext()).apply {
-//            setText(oldText)
-//        }
-//
-//        builder.setTitle("Edit Message")
-//        builder.setView(inputField)
-//
-//        builder.setPositiveButton("OK") { dialog, _ ->
-//            val newText = inputField.text.toString()
-//            if (newText.isNotEmpty()) {
-//                vm.updateMessage(messageId, chatId, newText)
-//            }
-//            dialog.dismiss()
-//        }
-//
-//        builder.setNegativeButton("Cancel") { dialog, _ ->
-//            dialog.dismiss()
-//        }
-//        builder.show()
-//
-//    }
+        builder.setPositiveButton("OK") { dialog, _ ->
+            val newUsername = inputField.text.toString()
+            if (newUsername.isNotEmpty()) {
+                val currentUserId = authViewModel.getCurrentUserId()
+                firebaseViewModel.updateUsername(currentUserId, newUsername)
+                Toast.makeText(requireContext(), "Username updated successfully", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(requireContext(), "Username cannot be empty", Toast.LENGTH_SHORT).show()
+            }
+            dialog.dismiss()
+        }
 
-
+        builder.setNegativeButton("Cancel") { dialog, _ ->
+            dialog.dismiss()
+        }
+        builder.show()
+    }
 }

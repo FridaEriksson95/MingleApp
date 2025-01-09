@@ -10,11 +10,11 @@ class FirebaseViewModel : ViewModel() {
 
     val users : LiveData<MutableList<Users>> get() = db.users
 
-    fun addUser(userName: String, email: String, uid: String, birth: String,imageResourceId : Int) {
-        db.addUser(userName,email,uid,birth,imageResourceId)
-    }
-
     fun onQueryTextChange(query : String) {
         db.onQueryTextChange(query)
+    }
+
+    fun updateUsername(uid: String, newUserName: String) {
+        db.updateUsername(uid, newUserName)
     }
 }
