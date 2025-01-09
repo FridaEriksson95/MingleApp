@@ -92,7 +92,7 @@ class DatabaseRepository {
                         Log.e("DatabaseRepo", "favorite status failed to update", it)
                     }
             }
-    }
+
 
     fun updateUsername(uid: String, newUserName: String) {
         db.collection("users")
