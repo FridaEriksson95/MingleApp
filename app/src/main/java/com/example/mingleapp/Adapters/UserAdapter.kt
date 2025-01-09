@@ -66,18 +66,6 @@ class UserAdapter(
         }
     }
 
-    fun replaceFragmentTest(context : Context, fragment : Fragment) {
-        val activity = context as AppCompatActivity
-
-        activity.supportFragmentManager.beginTransaction()
-            .replace(R.id.fragment_container, fragment)
-            .addToBackStack(null)
-            .commit()
-
-        activity.findViewById<View>(R.id.chat_menu_layout).visibility = View.GONE
-        activity.findViewById<View>(R.id.fragment_container).visibility = View.VISIBLE
-    }
-
     fun replaceFragment(fragment: Fragment, bundle: Bundle? = null) {
         val activity = context as AppCompatActivity
 

@@ -82,6 +82,7 @@ class DatabaseRepository {
                     Log.d("DatabaseRepo", "Error")
                 }
             }
+    }
 
 
     fun updateUserFavoriteStatus(user: Users, isFavorite: Boolean) {
