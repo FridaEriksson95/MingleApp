@@ -3,6 +3,7 @@ package com.example.mingleapp.View
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.ActivityResultLauncher
@@ -33,18 +34,8 @@ class SignUpActivity : AppCompatActivity() {
             insets
         }
 
-        profileImagePicker =
-            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-                if (result.resultCode == Activity.RESULT_OK && result.data != null) {
-                    val selectedImage = result.data?.data
-                    binding.profileImage.setImageURI(selectedImage)
-                }
-            }
-        binding.profileImage.setOnClickListener {
-            val profilePickIntent = Intent(Intent.ACTION_PICK)
-            profilePickIntent.type = "image/*"
-            profileImagePicker.launch(profilePickIntent)
-        }
+        profileImagePicker()
+
 
         binding.loginBtn.setOnClickListener {
             createAccount()
@@ -57,6 +48,7 @@ class SignUpActivity : AppCompatActivity() {
         val confirmPassword = binding.signupConfirm.text.toString()
         val username = binding.signupUsername.text.toString()
         val birth = binding.signupBirthdate.text.toString()
+
 
         if (email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty() || username.isEmpty() || birth.isEmpty()) {
             Toast.makeText(this, "Please fill all fields", Toast.LENGTH_SHORT).show()
@@ -72,11 +64,13 @@ class SignUpActivity : AppCompatActivity() {
             Toast.makeText(this, "Password must be at least 6 characters long", Toast.LENGTH_SHORT).show()
             return
         }
+        binding.progressBar.visibility = View.VISIBLE
 
-        authVm.createAccount(birth, username, email, password, imageResourceID = 0, onSuccess = {
+        authVm.createAccount(birth, username, email, password, imageResourceID = 0, isFavorite = false, onSuccess = {
             Toast.makeText(this, "Account created", Toast.LENGTH_LONG).show()
             navigateToLogin()
         }, onFailure = {
+            binding.progressBar.visibility = View.GONE
             Toast.makeText(this, "Account creation failed", Toast.LENGTH_SHORT).show()
         },
         )
@@ -84,5 +78,20 @@ class SignUpActivity : AppCompatActivity() {
     private fun navigateToLogin() {
         val intent = Intent(this, LoginActivity::class.java)
         startActivity(intent)
+    }
+
+    private fun profileImagePicker() {
+        profileImagePicker =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+                if (result.resultCode == Activity.RESULT_OK && result.data != null) {
+                    val selectedImage = result.data?.data
+                    binding.profileImage.setImageURI(selectedImage)
+                }
+            }
+        binding.profileImage.setOnClickListener {
+            val profilePickIntent = Intent(Intent.ACTION_PICK)
+            profilePickIntent.type = "image/*"
+            profileImagePicker.launch(profilePickIntent)
+        }
     }
 }
