@@ -27,4 +27,7 @@
     <string name="delete_account">Delete account</string>
     <string name="FAVORITES">FAVORITES</string>
     <string name="chat_name">Robin Jakobsson</string>
+    <string name="hello">Hello</string>
+    <string name="date_time_text">12:34</string>
+    <string name="chat_name_2">Nicholas</string>
 </resources>
