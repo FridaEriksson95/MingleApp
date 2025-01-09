@@ -92,4 +92,41 @@ class DatabaseRepository {
                         Log.e("DatabaseRepo", "favorite status failed to update", it)
                     }
             }
-        }
+    }
+
+    fun updateUsername(uid: String, newUserName: String) {
+        db.collection("users")
+            .document(uid)
+            .update("userName", newUserName)
+            .addOnSuccessListener {
+                Log.d("DatabaseRepository", "Username updated successfully")
+            }
+            .addOnFailureListener {
+                Log.d("DatabaseRepository", "Username update failed: ${it.message}")
+            }
+    }
+
+    fun updateProfilePicture(uid: String, newImageResourceId: Int) {
+        db.collection("users")
+            .document(uid)
+            .update("imageResourceID", newImageResourceId)
+            .addOnSuccessListener {
+                Log.d("DatabaseRepository", "Profile picture updated successfully")
+            }
+            .addOnFailureListener {
+                Log.d("DatabaseRepository", "Profile picture update failed: ${it.message}")
+            }
+    }
+
+    fun deleteUser(uid: String, onSuccess: () -> Unit, onFailure: (Exception) -> Unit) {
+        db.collection("users")
+            .document(uid)
+            .delete()
+            .addOnSuccessListener {
+                Log.d("DatabaseRepository", "User deleted successfully")
+            }
+            .addOnFailureListener {
+                Log.d("DatabaseRepository", "User deletion failed: ${it.message}")
+            }
+    }
+}

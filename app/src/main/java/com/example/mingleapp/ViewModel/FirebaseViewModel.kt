@@ -16,13 +16,12 @@ class FirebaseViewModel : ViewModel() {
     val users : LiveData<MutableList<Users>> get() = db.users
     val favoriteUsers: LiveData<MutableList<Users>> = db.favoriteUsers
 
-    fun addUser(userName: String, email: String, uid: String, birth: String,imageResourceId : Int, isFavorite: Boolean) {
-        db.addUser(userName,email,uid,birth,imageResourceId,isFavorite)
-    }
-
     fun onQueryTextChange(query : String) {
         db.onQueryTextChange(query)
     }
+
+    fun updateUsername(uid: String, newUserName: String) {
+        db.updateUsername(uid, newUserName)
 
     fun updateFavoriteStatus(user: Users) {
         db.updateUserFavoriteStatus(user, user.isFavorite)

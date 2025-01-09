@@ -22,5 +22,8 @@
     <string name="chat">Chat</string>
     <string name="open">Open</string>
     <string name="close">Close</string>
+    <string name="change_profile_picture">Change profile picture</string>
+    <string name="change_username">Change username</string>
+    <string name="delete_account">Delete account</string>
     <string name="FAVORITES">FAVORITES</string>
 </resources>

@@ -9,7 +9,7 @@
     android:padding="15dp"
     android:fitsSystemWindows="true"
     android:clickable="true"
-    android:focusable="true" >
+    android:focusable="true">
 
 
         <LinearLayout
