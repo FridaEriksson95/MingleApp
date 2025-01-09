@@ -29,6 +29,7 @@ class ChatMenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
     private lateinit var adapter: UserAdapter
     private lateinit var authVm: AuthViewModel
     private lateinit var firebaseViewModel: FirebaseViewModel
+    var favoriteFragment = FavoritesFragment()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -87,7 +88,7 @@ class ChatMenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
                 }
             }
             R.id.favorites -> {
-                navigateToFragment(FavoritesFragment())
+                adapter.replaceFragmentTest(this, favoriteFragment)
             }
             R.id.profile_settings -> {
                 navigateToFragment(ProfileSettingsFragment())
