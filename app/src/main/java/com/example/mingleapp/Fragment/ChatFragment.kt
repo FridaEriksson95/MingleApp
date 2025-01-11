@@ -2,7 +2,6 @@ package com.example.mingleapp.Fragment
 
 import android.app.AlertDialog
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -16,14 +15,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mingleapp.Adapters.MessageAdapter
 import com.example.mingleapp.R
-import com.example.mingleapp.ViewModel.AuthViewModel
-import com.example.mingleapp.ViewModel.FirebaseViewModel
 import com.example.mingleapp.ViewModel.MessageViewModel
 import com.example.mingleapp.databinding.FragmentChatBinding
 
 class ChatFragment : Fragment() {
 
-    private var binding: FragmentChatBinding? = null
+    private var _binding: FragmentChatBinding? = null
+    private val binding get() = _binding!!
+
     lateinit var messageAdapter: MessageAdapter
     private lateinit var vm: MessageViewModel
     private lateinit var chatId : String
@@ -32,8 +31,8 @@ class ChatFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentChatBinding.inflate(inflater, container, false)
-        return binding?.root
+        _binding = FragmentChatBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -41,7 +40,10 @@ class ChatFragment : Fragment() {
 
         vm = ViewModelProvider(this).get(MessageViewModel::class.java)
         setupBackPressFragment()
-        chatId = generateChatId()
+        val otherUserId = arguments?.getString("uid") ?: ""
+        val otherUserName = arguments?.getString("userName") ?: "Error"
+
+        chatId = vm.generateChatId(otherUserId)
         setupRecycleView()
         vm.listenForMessages(chatId)
 
@@ -54,17 +56,19 @@ class ChatFragment : Fragment() {
                     message
                 }
                 messageAdapter.updateData(updateMessages.toMutableList())
-                binding?.chatRv?.scrollToPosition(updateMessages.size - 1)
+                binding.chatRv.scrollToPosition(updateMessages.size - 1)
             }
         }
 
-        binding?.sendBtn?.setOnClickListener {
+        binding.nameChatTv.text = otherUserName
 
-            val inputMessage = binding?.typeMessageEt?.text.toString()
+        binding.sendBtn.setOnClickListener {
+
+            val inputMessage = binding.typeMessageEt.text.toString()
             if (inputMessage.isNotEmpty()) {
 
                 vm.sendMessage(inputMessage, chatId)
-                binding?.typeMessageEt?.text?.clear()
+                binding.typeMessageEt.text?.clear()
 
             } else {
                 Toast.makeText(requireContext(), "Please enter a message", Toast.LENGTH_SHORT)
@@ -72,25 +76,11 @@ class ChatFragment : Fragment() {
             }
         }
 
-        binding?.likeBtn?.setOnClickListener {
+        binding.likeBtn.setOnClickListener {
             val thumbsUp = "\uD83D\uDC4D"
             vm.sendMessage(thumbsUp, chatId)
         }
         swipeFunction()
-    }
-
-    private fun generateChatId() : String {
-        val currentUserId = vm.getCurrentUserId()
-        val otherUser = arguments?.getString("uid") ?: ""
-        val otherUserName = arguments?.getString("userName") ?: "Error"
-
-        binding?.nameChatTv?.text = otherUserName
-
-        return if (currentUserId > otherUser) {
-            "$currentUserId-$otherUser"
-        } else {
-            "$otherUser-$currentUserId"
-        }
     }
 
     private fun setupBackPressFragment() {
@@ -111,8 +101,8 @@ class ChatFragment : Fragment() {
                 showEditDialog(messageId, oldText)
 
             })
-        binding?.chatRv?.adapter = messageAdapter
-        binding?.chatRv?.layoutManager = LinearLayoutManager(requireContext())
+        binding.chatRv.adapter = messageAdapter
+        binding.chatRv.layoutManager = LinearLayoutManager(requireContext())
     }
 
     private fun showEditDialog(messageId: String, oldText: String) {
@@ -158,11 +148,11 @@ class ChatFragment : Fragment() {
             }
         })
 
-        itemTouchHelper.attachToRecyclerView(binding?.chatRv)
+        itemTouchHelper.attachToRecyclerView(binding.chatRv)
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        binding = null
+        _binding = null
     }
 }

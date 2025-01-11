@@ -126,6 +126,7 @@ class ChatMenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragment_container, fragment)
             .addToBackStack(null)
+            .setReorderingAllowed(true)
             .commit()
     }
 
