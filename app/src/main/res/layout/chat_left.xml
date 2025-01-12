@@ -10,10 +10,10 @@
         android:id="@+id/show_message_left"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
         android:padding="10dp"
         android:fontFamily="@font/acme"
-        android:text="Hello"
+        android:text="@string/hello"
         android:textColor="#FFFFFF"
         android:textSize="15sp"
         android:background="@drawable/green_fill"
@@ -27,7 +27,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginStart="10dp"
         android:fontFamily="@font/acme"
-        android:text="Robin"
+        android:text="@string/chat_name"
         android:textStyle="italic"/>
 
     <TextView
@@ -38,5 +38,5 @@
         android:layout_marginTop="10dp"
         android:fontFamily="@font/acme"
         android:textStyle="italic"
-        android:text="12:34" />
+        android:text="@string/date_time_text" />
 </LinearLayout>

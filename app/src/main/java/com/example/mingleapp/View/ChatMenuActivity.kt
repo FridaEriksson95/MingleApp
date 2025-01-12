@@ -42,7 +42,7 @@ class ChatMenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
             insets
         }
 
-       getViewModelInstance()
+        getViewModelInstance()
         recyclerViewSetup()
 
         setSupportActionBar(binding.toolbar)
@@ -126,11 +126,14 @@ class ChatMenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSel
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragment_container, fragment)
             .addToBackStack(null)
+            .setReorderingAllowed(true)
             .commit()
     }
 
     private fun recyclerViewSetup(){
-        adapter = UserAdapter(mutableListOf(), this, firebaseViewModel)
+        adapter = UserAdapter(mutableListOf(), this, onFavoriteToggled = { user ->
+            firebaseViewModel.updateFavoriteStatus(user)
+        })
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
     }

@@ -47,4 +47,13 @@ class MessageViewModel: ViewModel() {
         messageRepository.updateMessage(messageId, chatId, newText)
     }
 
+    fun generateChatId(otherUserId: String): String {
+        val currentUserId = getCurrentUserId()
+        return if (currentUserId > otherUserId) {
+            "$currentUserId-$otherUserId"
+        } else {
+            "$otherUserId-$currentUserId"
+        }
+    }
+
 }
