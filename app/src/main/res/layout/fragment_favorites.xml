@@ -6,6 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
+    android:clickable="true"
+    android:focusable="true"
     tools:context=".Fragment.FavoritesFragment">
 
    <TextView
@@ -17,16 +19,20 @@
        android:fontFamily="@font/acme"
        android:textSize="35sp"
        android:gravity="center"
+       android:background="@drawable/border"
        app:layout_constraintTop_toTopOf="parent"
-       android:background="@drawable/border" />
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintEnd_toEndOf="parent" />
 
    <androidx.recyclerview.widget.RecyclerView
        android:id="@+id/favoritesRV"
        android:layout_width="match_parent"
-       android:layout_height="wrap_content"
-       app:layout_constraintTop_toBottomOf="@id/favoritesTV"
+       android:layout_height="0dp"
        android:layout_marginTop="5dp"
        tools:listitem="@layout/chat_menu_user"
-       android:layout_gravity="center" />
+       app:layout_constraintTop_toBottomOf="@id/favoritesTV"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintEnd_toEndOf="parent"
+       app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

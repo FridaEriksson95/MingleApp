@@ -47,6 +47,9 @@ class ChatFragment : Fragment() {
         setupRecycleView()
         vm.listenForMessages(chatId)
 
+
+
+
         vm.users.observe(viewLifecycleOwner) { userList ->
             vm.messages.observe(viewLifecycleOwner) { messageList ->
 
@@ -86,7 +89,7 @@ class ChatFragment : Fragment() {
     private fun setupBackPressFragment() {
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
             requireActivity().findViewById<View>(R.id.chat_menu_layout).visibility = View.VISIBLE
-            requireActivity().findViewById<View>(R.id.fragment_container).visibility = View.GONE
+            requireActivity().supportFragmentManager.popBackStack() //Denna rad var lösningen på fragment problemet
         }
     }
 
