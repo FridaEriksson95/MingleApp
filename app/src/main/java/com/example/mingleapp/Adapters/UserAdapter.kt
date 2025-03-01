@@ -20,8 +20,9 @@ import com.example.mingleapp.ViewModel.FirebaseViewModel
 class UserAdapter(
     private val users: MutableList<Users>,
     private val context: Context,
-    private val firebaseViewModel: FirebaseViewModel
+    private val onFavoriteToggled: (Users) -> Unit
 ) : RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
+
 
     inner class UserViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val nameTextView : TextView = itemView.findViewById(R.id.nameTextView)
@@ -40,6 +41,7 @@ class UserAdapter(
 
     override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
         val user = users[position]
+
         holder.nameTextView.text = user.userName
         holder.profilePic.setImageResource(R.drawable.baseline_person_24)
 
@@ -48,25 +50,21 @@ class UserAdapter(
 
         holder.favoriteBtn.setOnClickListener {
             user.isFavorite = !user.isFavorite
-            firebaseViewModel.updateFavoriteStatus(user)
+            onFavoriteToggled(user)
             notifyItemChanged(position)
         }
 
         holder.itemView.setOnClickListener {
-            if (user.isFavorite) {
-                replaceFragment(FavoritesFragment())
-            } else {
-                val chatFragment = ChatFragment()
-                val bundle = Bundle().apply {
-                    putString("uid", user.uid)
-                    putString("userName", user.userName)
-                }
-                replaceFragment(chatFragment, bundle)
+            val chatFragment = ChatFragment()
+            val bundle = Bundle().apply {
+                putString("uid", user.uid)
+                putString("userName", user.userName)
             }
+            navigateToFragment(chatFragment, bundle)
         }
     }
 
-    fun replaceFragment(fragment: Fragment, bundle: Bundle? = null) {
+    private fun navigateToFragment(fragment: Fragment, bundle: Bundle? = null) {
         val activity = context as AppCompatActivity
 
         bundle?.let { fragment.arguments = it }
